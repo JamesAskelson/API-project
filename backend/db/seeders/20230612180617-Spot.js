@@ -21,7 +21,6 @@ module.exports = {
         description: 'Funnest place in detroit!',
         price: 156,
         avgRating: 3.5,
-        previewImage: 'image url'
       },
       {
         ownerId: '2',
@@ -35,7 +34,6 @@ module.exports = {
         description: 'Perfect place for golf',
         price: 16,
         avgRating: 4.0,
-        previewImage: 'image url'
       },
       {
         ownerId: '3',
@@ -49,7 +47,6 @@ module.exports = {
         description: 'Best place to learn how to wrangle hogs',
         price: 36,
         avgRating: 3.0,
-        previewImage: 'image url'
       }
     ], {});
   },

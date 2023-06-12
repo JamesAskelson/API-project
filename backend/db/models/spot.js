@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
         hooks: true
       })
-      Spot.hasMany(models.Image, {
+      Spot.hasMany(models.SpotImage, {
         foreignKey: 'spotId',
         onDelete: 'CASCADE',
         hooks: true,
@@ -83,9 +83,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    previewImage: {
-      type: DataTypes.STRING
-    }
   }, {
     sequelize,
     modelName: 'Spot',
