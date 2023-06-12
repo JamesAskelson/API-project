@@ -56,11 +56,11 @@ module.exports = {
         allowNull: false
       },
       price: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
         allowNull: false
       },
       avgRating: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
         allowNull: false
       },
       createdAt: {
