@@ -7,31 +7,28 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    options.tableName = 'Images';
+    options.tableName = 'SpotImages';
     return queryInterface.bulkInsert(options, [
       {
-        reviewId: 1,
-        spotId: 3,
-        url: "image url",
-        preview: true
-      },
-      {
-        reviewId: 2,
-        spotId: 2,
-        url: "image url",
-        preview: true
-      },
-      {
-        reviewId: 3,
         spotId: 1,
-        url: "image url",
+        url: 'image url',
+        preview: true
+      },
+      {
+        spotId: 2,
+        url: 'image url',
+        preview: true
+      },
+      {
+        spotId: 3,
+        url: 'image url',
         preview: true
       }
     ], {});
   },
 
-  down: async (queryInterface, Sequelize) => {
-    options.tableName = 'Images';
-    return queryInterface.bulkDelete(options, {}, {});
+  async down (queryInterface, Sequelize) {
+    options.tableName = 'SpotImages';
+    await queryInterface.bulkDelete(options, {}, {});
   }
 };
