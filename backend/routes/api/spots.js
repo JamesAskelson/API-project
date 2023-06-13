@@ -54,9 +54,16 @@ router.get(
             where: {
                 spotId: spotObj.id
             }
-        });
+          });
+          console.log("reviewavg", reviewAvg)
 
-          let reviewCount = await spot.countReviews()
+          let reviewCount = await spot.countReviews({
+            where: {
+                spotId: spotObj.id
+            }
+          })
+          console.log("reviewcount",reviewCount)
+
           spotObj.avgRating = reviewAvg / reviewCount;
 
           let previewImg = await SpotImage.findOne({
