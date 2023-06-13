@@ -19,8 +19,7 @@ module.exports = {
         lng: -83.134912,
         name: 'Detroit Funtown USA',
         description: 'Funnest place in detroit!',
-        price: 156,
-        avgRating: 3.5,
+        price: 156
       },
       {
         ownerId: '2',
@@ -32,8 +31,7 @@ module.exports = {
         lng: -122.428150,
         name: 'Fred"s Golf Resort',
         description: 'Perfect place for golf',
-        price: 16,
-        avgRating: 4.0,
+        price: 16
       },
       {
         ownerId: '3',
@@ -45,8 +43,7 @@ module.exports = {
         lng: -96.813345,
         name: 'Hog Wrangler Association',
         description: 'Best place to learn how to wrangle hogs',
-        price: 36,
-        avgRating: 3.0,
+        price: 36
       }
     ], {});
   },

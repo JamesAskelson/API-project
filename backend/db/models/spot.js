@@ -79,10 +79,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    avgRating: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
   }, {
     sequelize,
     modelName: 'Spot',

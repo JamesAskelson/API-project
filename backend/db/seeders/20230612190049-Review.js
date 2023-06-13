@@ -26,6 +26,12 @@ module.exports = {
         spotId: 1,
         review: "As the name says, one of the funnest places I've ever been, would go again",
         stars: 4.0
+      },
+      {
+        userId: 1,
+        spotId: 1,
+        review: "Was ok, the fun was over hyped",
+        stars: 3.0
       }
     ], {});
   },
