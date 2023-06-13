@@ -40,6 +40,51 @@ const validateNewSpot = [
   handleValidationErrors
 ];
 
+///////////////////////////////////////////////////////////
+
+router.get('/current', restoreUser, requireAuth, async(req, res) => {
+  const spots = await req.user.getSpots();
+
+  const spotsAvgRatingAndPrevImg = await Promise.all(
+    spots.map( async spot => {
+      let spotObj = spot.toJSON();
+
+      let reviewAvg = await Review.sum('stars', {
+        where: {
+            spotId: spotObj.id
+        }
+      });
+      console.log("reviewavg", reviewAvg)
+
+      let reviewCount = await spot.countReviews({
+        where: {
+            spotId: spotObj.id
+        }
+      })
+      console.log("reviewcount",reviewCount)
+
+      spotObj.avgRating = reviewAvg / reviewCount;
+
+      let previewImg = await SpotImage.findOne({
+        where: {
+            spotId: spotObj.id,
+            preview: true
+        },
+        attributes: ['url']
+      });
+
+
+      spotObj.previewImage = previewImg ? previewImg.url : null;
+
+      return spotObj;
+    })
+  )
+
+  res.json({Spots: spotsAvgRatingAndPrevImg})
+})
+
+///////////////////////////////////////////////////////////
+
 router.get(
   '/',
   async (req, res) => {
@@ -83,6 +128,8 @@ router.get(
 
     res.json({Spots: spotsWithAvgRating})
 })
+
+///////////////////////////////////////////////////////////////
 
 router.post('/', validateNewSpot, async (req, res) => {
     let { address, city, state, country, lat, lng, name, description, price } = req.body

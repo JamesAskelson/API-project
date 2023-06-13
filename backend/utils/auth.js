@@ -70,15 +70,15 @@ const restoreUser = (req, res, next) => {
     err.status = 401;
     return next(err);
   }
-  const authorizationCheck = function (req, res, next) {
-    if (req.user) {
+  const spotAuthorizationCheck = function (req, res, next) {
+    if (req.user.id === ownerId) {
         return next()
     };
 
-    const err = new Error('Authentication required');
-    err.title = 'Authentication required';
-    err.errors = { message: 'Authentication required' };
-    err.status = 401;
+    const err = new Error("Forbidden");
+    err.title = "Forbidden";
+    err.errors = { message: "Forbidden" };
+    err.status = 403;
     return next(err);
   }
 
