@@ -78,13 +78,12 @@ router.get('/:id', async (req, res) => {
     group: ["Spot.id", "SpotImages.id", "Owner.id"]
   })
 
-  if(spot.id !== parseInt(id)) {
+  if(!spot || spot.id !== parseInt(id)) {
     res.status(404)
     return res.json({
       "message": "Spot couldn't be found"
     })
   }
-
 
   res.json(spot)
 })
