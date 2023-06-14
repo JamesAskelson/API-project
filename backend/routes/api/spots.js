@@ -75,7 +75,7 @@ router.get('/:id', async (req, res) => {
         as: "Owner"
       }
     ],
-    group: ["Spot.id", "SpotImages.id"]
+    group: ["Spot.id", "SpotImages.id", "Owner.id"]
   })
 
   if(spot.id !== parseInt(id)) {
