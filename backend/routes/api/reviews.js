@@ -6,7 +6,50 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
+router.post('/:id/images', restoreUser, requireAuth, async (req, res) => {
+    let { id } = req.params.id;
+    let { url } = req.body
 
+    let review = await Review.findByPk(req.params.id)
+
+    if(!review) {
+      res.status(404)
+      return res.json({
+        "message": "Review couldn't be found"
+      })
+    }
+
+    if(review.userId !== req.user.id) {
+      res.status(403)
+      return res.json({
+        "message": "Forbidden"
+      })
+    }
+
+    let totalReviewImages = await review.getReviewImages()
+
+    if(totalReviewImages.length > 10) {
+        res.status(403)
+        return res.json({
+            "message": "Maximum number of images for this resource was reached"
+        })
+    }
+
+    let newReview = await review.createReviewImage(
+      {
+        url
+      }
+    );
+
+    newReview = {
+      id: newReview.id,
+      url: newReview.url,
+    };
+
+    res.json(newReview);
+  });
+
+  //////////////////////////////////////////////////////////////////////
 
 router.get('/current', restoreUser, requireAuth, async(req, res) => {
 
