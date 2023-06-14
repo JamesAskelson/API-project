@@ -11,18 +11,15 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
         reviewId: 1,
-        url: 'image url',
-        preview: true
+        url: 'image url'
       },
       {
         reviewId: 2,
-        url: 'image url',
-        preview: true
+        url: 'image url'
       },
       {
         reviewId: 3,
-        url: 'image url',
-        preview: true
+        url: 'image url'
       }
     ], {});
   },

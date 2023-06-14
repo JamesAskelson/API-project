@@ -40,6 +40,41 @@ const validateNewSpot = [
   handleValidationErrors
 ];
 
+/////////////////////////////////////////////////////////////
+
+
+router.post('/:id/images', restoreUser, requireAuth, async (req, res) => {
+  let { id } = req.params.id;
+  let { url, preview } = req.body
+
+  let spot = await Spot.findByPk(req.params.id)
+
+  if(!spot) {
+    res.status(404)
+    return res.json({
+      "message": "Spot couldn't be found"
+    })
+  }
+
+  if(spot.ownerId !== req.user.id) {
+    res.status(404)
+    return res.json({
+      "message": "Forbidden"
+    })
+  }
+
+
+
+  let newImage = await spot.createSpotImage({
+    url,
+    preview
+  })
+
+  res.json(newImage)
+})
+
+
+
 ////////////////////////////////////////////////////////////
 
 router.get('/:id', async (req, res) => {
