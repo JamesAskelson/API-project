@@ -43,14 +43,7 @@ const validateNewSpot = [
 ////////////////////////////////////////////////////////////
 
 router.get('/:id', async (req, res) => {
-  const { id } = req.params
-
-  if(Spot.id !== id) {
-    res.status(404)
-    return res.json({
-      "message": "Spot couldn't be found"
-    })
-  }
+  const { id } = req.params;
 
   let spot = await Spot.findByPk(req.params.id, {
     attributes: {
@@ -83,8 +76,20 @@ router.get('/:id', async (req, res) => {
       }
     ]
   })
+
+
+
+  if(spot.id !== parseInt(id)) {
+    res.status(404)
+    return res.json({
+      "message": "Spot couldn't be found"
+    })
+  }
+
+
   res.json(spot)
 })
+
 
 ///////////////////////////////////////////////////////////
 
