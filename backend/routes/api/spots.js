@@ -1,7 +1,7 @@
 const express = require('express');
-const { sequelize, Op } = require('sequelize');
+const { Sequelize, Op } = require('sequelize');
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
-const { Spot, Review, SpotImage } = require('../../db/models');
+const { User, Spot, Review, SpotImage } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
@@ -40,6 +40,52 @@ const validateNewSpot = [
   handleValidationErrors
 ];
 
+////////////////////////////////////////////////////////////
+
+router.get('/:id', async (req, res) => {
+  const { id } = req.params
+
+  if(Spot.id !== id) {
+    res.status(404)
+    return res.json({
+      "message": "Spot couldn't be found"
+    })
+  }
+
+  let spot = await Spot.findByPk(req.params.id, {
+    attributes: {
+      include: [
+        [Sequelize.fn('COUNT', Sequelize.col('Reviews.id')), 'reviewCount'],
+        [Sequelize.fn("ROUND", Sequelize.fn("AVG", Sequelize.col("Reviews.stars")), 1), "avgRating"],
+      ],
+    },
+    include: [
+      {
+        model: Review,
+        attributes: [],
+        where: {
+          spotId: id
+        }
+      },
+      {
+        model: SpotImage,
+        attributes: {
+          exclude: ["spotId", "createdAt", "updatedAt"]
+        },
+        as: "SpotImages"
+      },
+      {
+        model: User,
+        attributes: {
+          exclude: ["username", "email", "hashedPassword", "createdAt", "updatedAt"]
+        },
+        as: "Owner"
+      }
+    ]
+  })
+  res.json(spot)
+})
+
 ///////////////////////////////////////////////////////////
 
 router.get('/current', restoreUser, requireAuth, async(req, res) => {
@@ -54,14 +100,12 @@ router.get('/current', restoreUser, requireAuth, async(req, res) => {
             spotId: spotObj.id
         }
       });
-      console.log("reviewavg", reviewAvg)
 
       let reviewCount = await spot.countReviews({
         where: {
             spotId: spotObj.id
         }
       })
-      console.log("reviewcount",reviewCount)
 
       spotObj.avgRating = reviewAvg / reviewCount;
 
@@ -83,6 +127,8 @@ router.get('/current', restoreUser, requireAuth, async(req, res) => {
   res.json({Spots: spotsAvgRatingAndPrevImg})
 })
 
+
+
 ///////////////////////////////////////////////////////////
 
 router.get(
@@ -99,15 +145,13 @@ router.get(
             where: {
                 spotId: spotObj.id
             }
-          });
-          console.log("reviewavg", reviewAvg)
+          })
 
           let reviewCount = await spot.countReviews({
             where: {
                 spotId: spotObj.id
             }
           })
-          console.log("reviewcount",reviewCount)
 
           spotObj.avgRating = reviewAvg / reviewCount;
 

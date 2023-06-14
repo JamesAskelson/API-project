@@ -26,7 +26,8 @@ module.exports = (sequelize, DataTypes) => {
         as: "SpotImages"
       })
       Spot.belongsTo(models.User, {
-        foreignKey: 'ownerId'
+        foreignKey: 'ownerId',
+        as: "Owner"
       })
     }
   }
