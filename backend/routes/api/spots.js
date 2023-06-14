@@ -40,10 +40,71 @@ const validateSpot = [
   handleValidationErrors
 ];
 
+const validateReview = [
+  check('review')
+    .exists({ checkFalsy: true })
+    .withMessage("Review text is required"),
+  check('stars')
+    .exists({ checkFalsy: true })
+    .isFloat({min: 1, max: 5})
+    .withMessage("Stars must be an integer from 1 to 5"),
+  handleValidationErrors
+];
+
+/////////////////////////////////////////////////////////////
+
+router.post('/:id/reviews', restoreUser, requireAuth, validateReview, async (req, res) => {
+  let { review, stars } = req.body;
+
+  let spot = await Spot.findByPk(req.params.id);
+
+  let existingReview = await Review.findOne({
+    where: {
+      spotId: req.params.id,
+      userId: req.user.id
+    }
+  });
+
+  if (existingReview) {
+    res.status(500);
+    console.log("test")
+    return res.json({
+      "message": "User already has a review for this spot"
+    });
+  }
+
+  if (!spot) {
+    res.status(404);
+    return res.json({
+      "message": "Spot couldn't be found"
+    });
+  }
+
+  let newReview = await spot.createReview({
+    userId: req.user.id,
+    spotId: req.params.id,
+    review,
+    stars
+  });
+
+  newReview = {
+    id: newReview.id,
+    userId: newReview.userId,
+    spotId: newReview.spotId,
+    review: newReview.review,
+    stars: newReview.stars,
+    createdAt: newReview.createdAt,
+    updatedAt: newReview.updatedAt
+  };
+
+  res.status(201)
+  res.json(newReview);
+});
+
 /////////////////////////////////////////////////////////////
 
 router.get('/:id/reviews', async (req, res) => {
-  
+
   let spot = await Spot.findByPk(req.params.id)
 
   if(!spot) {
@@ -80,7 +141,7 @@ router.get('/:id/reviews', async (req, res) => {
 
 ////////////////////////////////////////////////////////////
 
-router.post('/:id/images', restoreUser, requireAuth, async (req, res) => {
+router.post('/:id/images', restoreUser, requireAuth, validateReview, async (req, res) => {
   let { id } = req.params.id;
   let { url, preview } = req.body
 
@@ -94,7 +155,7 @@ router.post('/:id/images', restoreUser, requireAuth, async (req, res) => {
   }
 
   if(spot.ownerId !== req.user.id) {
-    res.status(404)
+    res.status(403)
     return res.json({
       "message": "Forbidden"
     })
@@ -183,7 +244,7 @@ router.put('/:id', restoreUser, requireAuth, validateSpot, async(req, res) => {
   }
 
   if(spot.ownerId !== req.user.id) {
-    res.status(404)
+    res.status(403)
     return res.json({
       "message": "Forbidden"
     })
@@ -236,7 +297,7 @@ router.delete('/:id', restoreUser, requireAuth, async(req, res) => {
   }
 
   if(spot.ownerId !== req.user.id) {
-    res.status(404)
+    res.status(403)
     return res.json({
       "message": "Forbidden"
     })
@@ -359,6 +420,7 @@ router.post('/', restoreUser, requireAuth, validateSpot, async (req, res) => {
 
     await newSpot.save();
 
+    res.status(201)
     res.json(newSpot)
 })
 
