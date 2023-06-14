@@ -74,7 +74,8 @@ router.get('/:id', async (req, res) => {
         },
         as: "Owner"
       }
-    ]
+    ],
+    group: ["Spot.id"]
   })
 
 
