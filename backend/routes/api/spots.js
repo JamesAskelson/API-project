@@ -52,6 +52,95 @@ const validateReview = [
   handleValidationErrors
 ];
 
+
+
+////////////////////////////////////////////////////////////
+
+router.post('/:id/bookings', restoreUser, requireAuth, async(req, res) => {
+  let { startDate, endDate } = req.body;
+
+  startDate = new Date(startDate)
+  endDate = new Date(endDate)
+  startDate = startDate.getTime()
+  endDate = endDate.getTime()
+
+  console.log(startDate, endDate)
+
+  let spot = await Spot.findByPk(req.params.id);
+
+  if(!spot) {
+    res.status(404)
+    return res.json({
+      "message": "Spot couldn't be found"
+    })
+  }
+
+  if(spot.ownerId === req.user.id) {
+    res.status(403)
+    return res.json({
+      "message": "Forbidden"
+    })
+  }
+
+  let spotBookings = await spot.getBookings()
+
+  await Promise.all(
+    spotBookings.map( async booking => {
+      booking = booking.toJSON()
+
+      let bookingStart = booking.startDate;
+      let bookingEnd = booking.endDate;
+      bookingStart = new Date(bookingStart)
+      bookingEnd = new Date(bookingEnd)
+      bookingStart = bookingStart.getTime()
+      bookingEnd = bookingEnd.getTime()
+
+      errors = []
+      if(startDate >= bookingStart && startDate <= bookingEnd) {
+        errors.push(1)
+      }
+      if(endDate >= bookingStart && endDate <= bookingEnd){
+        errors.push(2)
+      }
+
+      if(errors.length > 0) {
+        res.status(403);
+        return res.json({
+          "message": "Sorry, this spot is already booked for the specified dates",
+          "errors": {
+            "startDate": "Start date conflicts with an existing booking",
+            "endDate": "End date conflicts with an existing booking"
+          }
+        });
+      }
+
+    })
+  )
+
+
+
+
+  let newBooking = await spot.createBooking({
+    spotId: req.params.id,
+    userId: req.user.id,
+    startDate,
+    endDate
+  })
+
+  newBooking = {
+    id: newBooking.id,
+    spotId: newBooking.userId,
+    userId: newBooking.spotId,
+    startDate: newBooking.startDate,
+    endDate: newBooking.endDate,
+    createdAt: newBooking.createdAt,
+    updatedAt: newBooking.updatedAt
+  };
+
+
+  res.json(newBooking)
+})
+
 /////////////////////////////////////////////////////////////
 
 router.post('/:id/reviews', restoreUser, requireAuth, validateReview, async (req, res) => {
