@@ -84,6 +84,8 @@ router.post('/:id/bookings', restoreUser, requireAuth, async(req, res) => {
 
   let spotBookings = await spot.getBookings()
 
+  let errors = []
+
   await Promise.all(
     spotBookings.map( async booking => {
       booking = booking.toJSON()
@@ -97,27 +99,30 @@ router.post('/:id/bookings', restoreUser, requireAuth, async(req, res) => {
 
       errors = []
       if(startDate >= bookingStart && startDate <= bookingEnd) {
+        console.log("startDate", startDate)
+        console.log("bookingStart", bookingStart)
+        console.log("bookingStart", bookingEnd)
         errors.push(1)
       }
       if(endDate >= bookingStart && endDate <= bookingEnd){
-        errors.push(2)
+        console.log("endDate", endDate)
+        console.log("bookingStart", bookingStart)
+        console.log("bookingStart", bookingEnd)
+        errors.push(1)
       }
-
-      if(errors.length > 0) {
-        res.status(403);
-        return res.json({
-          "message": "Sorry, this spot is already booked for the specified dates",
-          "errors": {
-            "startDate": "Start date conflicts with an existing booking",
-            "endDate": "End date conflicts with an existing booking"
-          }
-        });
-      }
-
     })
   )
 
-
+  if(errors.length > 0) {
+    res.status(403);
+    return res.json({
+      "message": "Sorry, this spot is already booked for the specified dates",
+      "errors": {
+        "startDate": "Start date conflicts with an existing booking",
+        "endDate": "End date conflicts with an existing booking"
+      }
+    });
+  }
 
 
   let newBooking = await spot.createBooking({
