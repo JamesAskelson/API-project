@@ -6,6 +6,17 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
+const validateReview = [
+    check('review')
+      .exists({ checkFalsy: true })
+      .withMessage("Review text is required"),
+    check('stars')
+      .exists({ checkFalsy: true })
+      .isFloat({min: 1, max: 5})
+      .withMessage("Stars must be an integer from 1 to 5"),
+    handleValidationErrors
+  ];
+
 router.post('/:id/images', restoreUser, requireAuth, async (req, res) => {
     let { id } = req.params.id;
     let { url } = req.body
@@ -49,9 +60,71 @@ router.post('/:id/images', restoreUser, requireAuth, async (req, res) => {
     res.json(newReview);
   });
 
+  ///////////////////////////////////////////////////////////////////////
+
+  router.put('/:id', restoreUser, requireAuth, validateReview, async(req, res) => {
+    let { review, stars } = req.body;
+    let currReview = await Review.findByPk(req.params.id)
+
+    if(!currReview) {
+      res.status(404)
+      return res.json({
+        "message": "Review couldn't be found"
+      })
+    }
+
+    if(currReview.userId !== req.user.id) {
+      res.status(403)
+      return res.json({
+        "message": "Forbidden"
+      })
+    }
+
+    if(review) {
+        currReview.review = review;
+    }
+    if(stars) {
+        currReview.stars = stars;
+    }
+
+
+    await currReview.save()
+
+    res.json(currReview)
+  })
+
   //////////////////////////////////////////////////////////////////////
 
-router.get('/current', restoreUser, requireAuth, async(req, res) => {
+
+  router.delete('/:id', restoreUser, requireAuth, async(req, res) => {
+    let review = await Review.findByPk(req.params.id)
+
+    if(!review) {
+      res.status(404)
+      return res.json({
+        "message": "Review couldn't be found"
+      })
+    }
+
+    if(review.userId !== req.user.id) {
+      res.status(403)
+      return res.json({
+        "message": "Forbidden"
+      })
+    }
+
+    await review.destroy()
+
+    res.json({
+      "message": "Successfully deleted"
+    })
+
+  })
+
+
+  /////////////////////////////////////////////////////////////////////
+
+    router.get('/current', restoreUser, requireAuth, async(req, res) => {
 
     let reviews = await req.user.getReviews({
         include: [
@@ -96,6 +169,10 @@ router.get('/current', restoreUser, requireAuth, async(req, res) => {
 
     res.json({Reviews: reviewsObj})
 })
+
+//////////////////////////////////////////////////////////////////
+
+
 
 
 module.exports = router;
