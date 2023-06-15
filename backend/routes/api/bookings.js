@@ -19,7 +19,7 @@ router.get('/current', restoreUser, requireAuth, async(req, res) => {
                 },
             },
         ],
-        group:["Spot.id"]
+        group:["Booking.id", "Spot.id"]
     });
 
     let bookingsObj = await Promise.all(bookings.map(async booking => {

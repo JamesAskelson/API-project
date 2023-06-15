@@ -127,7 +127,7 @@ router.get('/:id/bookings', restoreUser, requireAuth, async(req,res) => {
           },
         },
       ],
-      group: ["User.id"]
+      group: ["Booking.id", "User.id"]
     })
 
     res.json({Bookings: spotBooking})
