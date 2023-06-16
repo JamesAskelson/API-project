@@ -280,7 +280,7 @@ router.get('/:id/reviews', async (req, res) => {
 
 ////////////////////////////////////////////////////////////
 
-router.post('/:id/images', restoreUser, requireAuth, validateReview, async (req, res) => {
+router.post('/:id/images', restoreUser, requireAuth, async (req, res) => {
   let { id } = req.params.id;
   let { url, preview } = req.body
 
@@ -318,7 +318,46 @@ router.post('/:id/images', restoreUser, requireAuth, validateReview, async (req,
   res.json(newImage);
 });
 
+///////////////////////////////////////////////////////////
 
+router.get('/current', restoreUser, requireAuth, async(req, res) => {
+  const spots = await req.user.getSpots();
+
+  const spotsAvgRatingAndPrevImg = await Promise.all(
+    spots.map( async spot => {
+      let spotObj = spot.toJSON();
+
+      let reviewAvg = await Review.sum('stars', {
+        where: {
+            spotId: spotObj.id
+        }
+      });
+
+      let reviewCount = await spot.countReviews({
+        where: {
+            spotId: spotObj.id
+        }
+      })
+
+      spotObj.avgRating = reviewAvg / reviewCount;
+
+      let previewImg = await SpotImage.findOne({
+        where: {
+            spotId: spotObj.id,
+            preview: true
+        },
+        attributes: ['url']
+      });
+
+
+      spotObj.previewImage = previewImg ? previewImg.url : null;
+
+      return spotObj;
+    })
+  )
+
+  res.json({Spots: spotsAvgRatingAndPrevImg})
+})
 
 ////////////////////////////////////////////////////////////
 
@@ -449,49 +488,6 @@ router.delete('/:id', restoreUser, requireAuth, async(req, res) => {
   })
 
 })
-
-///////////////////////////////////////////////////////////
-
-router.get('/current', restoreUser, requireAuth, validateSpot, async(req, res) => {
-  const spots = await req.user.getSpots();
-
-  const spotsAvgRatingAndPrevImg = await Promise.all(
-    spots.map( async spot => {
-      let spotObj = spot.toJSON();
-
-      let reviewAvg = await Review.sum('stars', {
-        where: {
-            spotId: spotObj.id
-        }
-      });
-
-      let reviewCount = await spot.countReviews({
-        where: {
-            spotId: spotObj.id
-        }
-      })
-
-      spotObj.avgRating = reviewAvg / reviewCount;
-
-      let previewImg = await SpotImage.findOne({
-        where: {
-            spotId: spotObj.id,
-            preview: true
-        },
-        attributes: ['url']
-      });
-
-
-      spotObj.previewImage = previewImg ? previewImg.url : null;
-
-      return spotObj;
-    })
-  )
-
-  res.json({Spots: spotsAvgRatingAndPrevImg})
-})
-
-
 
 ///////////////////////////////////////////////////////////
 
