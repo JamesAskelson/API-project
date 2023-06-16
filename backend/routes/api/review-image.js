@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.delete('/:id', restoreUser, requireAuth, async(req, res) => {
 
-    let reviewImg = await ReviewImage.findByPk(req.params.id)
+    let reviewImg = await ReviewImage.unscoped().findByPk(req.params.id)
 
     if(!reviewImg) {
         res.status(404)
@@ -20,7 +20,7 @@ router.delete('/:id', restoreUser, requireAuth, async(req, res) => {
 
     let review = await reviewImg.getReview()
 
-    
+
     console.log(review)
 
     if(review.userId !== req.user.id) {
