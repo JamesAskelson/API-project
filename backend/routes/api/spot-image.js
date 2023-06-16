@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.delete('/:id', restoreUser, requireAuth, async(req, res) => {
 
-    let spotImg = await SpotImage.unscope().findByPk(req.params.id)
+    let spotImg = await SpotImage.unscoped().findByPk(req.params.id)
 
     console.log(spotImg)
 
