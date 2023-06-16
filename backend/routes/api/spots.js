@@ -537,15 +537,15 @@ router.get(
     }
     //////////////////////////////////
     if (minLng && maxLng) {
-      where.Lng = {
+      where.lng = {
         [Op.between]: [minLng, maxLng],
       };
     } else if (minLng) {
-      where.Lng = {
+      where.lng = {
         [Op.gte]: minLng,
       };
     } else if (maxLng) {
-      where.Lng = {
+      where.lng = {
         [Op.lte]: maxLng,
       };
     }
