@@ -4,6 +4,7 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 const { User, Spot, Review, SpotImage, Booking } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const { route } = require('./reviews');
 const router = express.Router();
 
 //////////////////////////////////////////////////////////////////////
@@ -101,6 +102,59 @@ router.put('/:id/', restoreUser, requireAuth, async(req, res) => {
 
 //////////////////////////////////////////////////////////////////////
 
+router.delete('/:id', restoreUser, requireAuth, async(req, res) => {
+    let booking = await Booking.findByPk(req.params.id)
+
+    if(!booking) {
+        res.status(404)
+        return res.json({
+            "message": "Booking couldn't be found"
+          })
+    }
+
+    let spot = await booking.getSpot();
+
+    if(req.user.id !== booking.userId && req.user.id !== spot.ownerId) {
+        res.status(403)
+        return res.json({
+        "message": "Forbidden"
+        })
+    }
+
+    let bookingStart = booking.startDate;
+    let bookingEnd = booking.endDate;
+    bookingStart = new Date(bookingStart)
+    bookingEnd = new Date(bookingEnd)
+    bookingStart = bookingStart.getTime()
+    bookingEnd = bookingEnd.getTime()
+
+    let currentTime = new Date();
+    currentTime = currentTime.getTime();
+
+
+    console.log("str",bookingStart)
+    console.log("cur",currentTime)
+    console.log("end",bookingEnd)
+
+    if(currentTime >= bookingStart && currentTime <= bookingEnd){
+        res.status(403)
+        return res.json({
+            "message": "Bookings that have been started can't be deleted"
+          })
+    }
+
+
+    await booking.destroy()
+
+    res.json({
+        "message": "Successfully deleted"
+      })
+})
+
+
+
+//////////////////////////////////////////////////////////////////////
+
 router.get('/current', restoreUser, requireAuth, async(req, res) => {
 
     let bookings = await req.user.getBookings({
@@ -129,6 +183,7 @@ router.get('/current', restoreUser, requireAuth, async(req, res) => {
 
           return booking
     }))
+
 
 
     res.json({Bookings: bookingsObj})
