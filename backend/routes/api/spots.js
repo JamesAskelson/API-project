@@ -37,6 +37,7 @@ const validateSpot = [
     .withMessage("Description is required"),
   check("price")
     .exists({ checkFalsy: true })
+    .isInt({min: 0})
     .withMessage("Price per day is required"),
   handleValidationErrors
 ];
@@ -362,7 +363,9 @@ router.get('/current', restoreUser, requireAuth, async(req, res) => {
 ////////////////////////////////////////////////////////////
 
 router.get('/:id', async (req, res) => {
-  const { id } = req.params;
+  let { id } = req.params;
+
+  id = parseInt(id)
 
   let spot = await Spot.findByPk(req.params.id, {
     attributes: {
@@ -375,9 +378,6 @@ router.get('/:id', async (req, res) => {
       {
         model: Review,
         attributes: [],
-        where: {
-          spotId: id
-        }
       },
       {
         model: SpotImage,
@@ -397,7 +397,9 @@ router.get('/:id', async (req, res) => {
     group: ["Spot.id", "SpotImages.id", "Owner.id"]
   })
 
-  if(!spot || spot.id !== parseInt(id)) {
+  console.log(spot)
+
+  if(!spot) {
     res.status(404)
     return res.json({
       "message": "Spot couldn't be found"
@@ -495,6 +497,7 @@ router.get(
   '/',
   async (req, res) => {
     let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+    let pagination = {}
 
     if(!page) {
       page = 1
@@ -510,6 +513,11 @@ router.get(
     }
     if(size > 20) {
       size = 20
+    }
+
+    if(page >= 1 && size >= 1){
+      pagination.limit = size
+      pagination.offset = size * (page - 1)
     }
 
     let errors = {}
@@ -618,7 +626,8 @@ router.get(
     ///////////////////////////////
 
     let spots = await Spot.findAll({
-      where
+      where,
+      ...pagination
     })
     const spotsWithAvgRating = await Promise.all(
         spots.map(async spot => {
@@ -681,9 +690,10 @@ router.post('/', restoreUser, requireAuth, validateSpot, async (req, res) => {
       price
     })
 
+
     await newSpot.save();
 
-    res.status(201)
+
     res.json(newSpot)
 })
 

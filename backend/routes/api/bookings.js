@@ -66,12 +66,14 @@ router.put('/:id/', restoreUser, requireAuth, async(req, res) => {
         bookingStart = bookingStart.getTime()
         bookingEnd = bookingEnd.getTime()
 
-        if(startDate >= bookingStart && startDate <= bookingEnd) {
-          conflict = true
-        }
-        if(endDate >= bookingStart && endDate <= bookingEnd){
-          conflict = true
-        }
+        if(booking.userId !== req.user.id) {
+          if(startDate >= bookingStart && startDate <= bookingEnd) {
+            conflict = true
+          }
+          if(endDate >= bookingStart && endDate <= bookingEnd){
+            conflict = true
+          }
+      }
 
       })
     )
