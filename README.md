@@ -53,7 +53,7 @@ Returns the information about the current user that is logged in.
 - Request
 
   - Method: GET
-  - URL: /users/:userId
+  - URL: /session
   - Body: none
 
 - Successful Response when there is a logged in user
@@ -97,7 +97,7 @@ information.
 - Request
 
   - Method: POST
-  - URL: /users/login
+  - URL: /session
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -167,7 +167,7 @@ user's information.
 - Request
 
   - Method: POST
-  - URL: /users/sign-up
+  - URL: /users
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -304,7 +304,7 @@ Returns all the spots owned (created) by the current user.
 - Request
 
   - Method: GET
-  - URL: /users/:userId/spots
+  - URL: /spots/current
   - Body: none
 
 - Successful Response
@@ -669,7 +669,7 @@ Returns all the reviews written by the current user.
 - Request
 
   - Method: GET
-  - URL: /users/:userId/reviews
+  - URL: /reviews/current
   - Body: none
 
 - Successful Response
@@ -1038,7 +1038,7 @@ Return all the bookings that the current user has made.
 - Request
 
   - Method: GET
-  - URL: /bookings
+  - URL: /bookings/current
   - Body: none
 
 - Successful Response
@@ -1394,7 +1394,7 @@ Delete an existing image for a Spot.
 - Request
 
   - Method: DELETE
-  - URL: /spots/:spotId/images/:imageId
+  - URL: /spot-images/:spotImageId
   - Body: none
 
 - Successful Response
@@ -1432,7 +1432,7 @@ Delete an existing image for a Review.
 - Request
 
   - Method: DELETE
-  - URL: /reviews/:reviewId/images/:imageId
+  - URL: /review-images/:reviewImageId
   - Body: none
 
 - Successful Response
