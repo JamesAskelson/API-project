@@ -4,7 +4,6 @@ import { Route, Switch } from "react-router-dom";
 import LoginFormPage from "./components/LoginFormPage";
 import * as sessionActions from "./store/session";
 
-
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -15,10 +14,10 @@ function App() {
   return (
     isLoaded && (
       <Switch>
-      <Route path="/login">
-        <LoginFormPage />
-      </Route>
-    </Switch>
+        <Route path="/login">
+          <LoginFormPage />
+        </Route>
+      </Switch>
     )
   );
 }
