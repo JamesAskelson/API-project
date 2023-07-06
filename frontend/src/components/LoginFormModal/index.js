@@ -3,6 +3,8 @@ import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
+import { Link } from "react-router-dom";
+
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -24,11 +26,29 @@ function LoginFormModal() {
       });
   };
 
+  const demoLogin = (e) => {
+    e.preventDefault();
+    setErrors({});
+    return dispatch(sessionActions.login({ credential: 'Demo-lition', password: 'password' }))
+        .then(closeModal)
+        .catch(async (res) => {
+            const data = await res.json();
+            if (data && data.errors) {
+                setErrors(data.errors);
+            }
+        });
+  };
+
+const isFormInvalid = !credential || !password;
+
   return (
     <>
       <h1>Log In</h1>
+      {errors.credential && (
+          <p className="login-errors">{errors.credential}</p>
+        )}
       <form onSubmit={handleSubmit}>
-        <label>
+        <label className="user-cred">
           Username or Email
           <input
             type="text"
@@ -37,7 +57,7 @@ function LoginFormModal() {
             required
           />
         </label>
-        <label>
+        <label className="user-password">
           Password
           <input
             type="password"
@@ -46,10 +66,9 @@ function LoginFormModal() {
             required
           />
         </label>
-        {errors.credential && (
-          <p>{errors.credential}</p>
-        )}
-        <button type="submit">Log In</button>
+        <button className="submit-button" type="submit" disabled={isFormInvalid}>Log In</button>
+
+        <Link className="demo-user-login-link" to="/" onClick={demoLogin} exact="true" >Demo User</Link>
       </form>
     </>
   );

@@ -1,0 +1,51 @@
+h1 {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input, textarea {
+    background-color: rgb(225, 225, 255);
+}
+
+label {
+    font-weight: 800px;
+}
+
+#modal-content {
+    width: 20%;
+    padding: 0px 20px 0px;
+    border-radius: 20px;
+}
+
+.login-errors {
+    color: red;
+    font-weight: bold;
+}
+
+.user-cred {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+}
+
+.user-password {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+
+.submit-button{
+    height: 40px;
+    box-shadow: 2px 2px 0px rgb(105, 100, 100);
+}
+
+.demo-user-login-link {
+    text-align: center;
+    padding: 20px 0px 20px;
+    text-decoration: underline;
+}

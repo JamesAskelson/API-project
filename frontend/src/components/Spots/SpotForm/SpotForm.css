@@ -1,0 +1,128 @@
+#create-spot-content{
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    border: 1px solid black;
+    padding: 0px 10px;
+}
+
+.spot-title-description-1 {
+    font-weight: 800;
+}
+
+.country-input{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.address-input{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.city-state-content {
+    display: flex;
+    justify-content: space-around;
+}
+
+.city-content {
+    flex-basis: 60%;
+    padding-right: 10px;
+}
+
+.city-input{
+    display: flex;
+    flex-direction: column;
+}
+
+.city-state-comma {
+    display: flex;
+    align-items: end;
+    font-weight: 800;
+    font-size: 20px;
+}
+
+
+.state-input{
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+}
+
+.lat-lng-content {
+    display: flex;
+    justify-content: space-around;
+}
+
+.lat-content {
+
+}
+
+.lat-input{
+    display: flex;
+    flex-direction: column;
+}
+
+.lat-lng-comma {
+    display: flex;
+    align-items: end;
+    font-weight: 800;
+    font-size: 20px;
+}
+
+.lng-input{
+    display: flex;
+    flex-direction: column;
+}
+
+.spot-description-input {
+    padding-right: 5px;
+}
+.spot-description-input textarea {
+    resize: vertical;
+    width: 100%;
+    height: 100px;
+}
+
+.spot-price-input-container {
+    display: flex
+}
+
+.dollar-sign-icon {
+    font-size: 18px;
+    font-weight: 800;
+    padding-right: 10px;
+}
+
+.spot-price-input {
+    flex-basis: 100%;
+}
+
+.spot-images-container {
+    display:flex;
+    flex-direction: column;
+}
+
+.spot-images-container input {
+    width: 100%;
+    margin: 10px 0px;
+}
+
+.thick-line {
+    border-top: 2px solid black;
+}
+
+.spot-create-submit-button {
+    margin-left: auto;
+    margin-right: auto;
+    width: 25%;
+    color: white;
+    background-color: rgb(255, 100, 126);
+    box-shadow: 2px 2px 0px black;
+}
+
+.error {
+    color: red;
+}
