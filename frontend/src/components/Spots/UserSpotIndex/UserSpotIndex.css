@@ -1,0 +1,14 @@
+#manage-spots-title {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 60px;
+}
+
+.manage-spots-title-text {
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.manage-spots-create-button {
+    width: 150px;
+}

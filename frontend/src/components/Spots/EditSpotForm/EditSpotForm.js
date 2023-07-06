@@ -1,26 +1,25 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { addImageToSpot, createSpot } from "../../../store/spots";
-import './SpotForm.css'
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
+import { updateSpot, getSpotById } from "../../../store/spots";
+import './EditSpotForm.css'
 
-export const SpotForm = () => {
+
+export const EditSpotForm = () => {
     const dispatch = useDispatch();
+    const spotInfo = useSelector(state => state?.spots?.singleSpot)
+    console.log('spot info',spotInfo)
     const history = useHistory();
-    const [country, setCountry] = useState('');
-    const [address, setAddress] = useState('');
-    const [city, setCity] = useState('');
-    const [state, setState] = useState('');
-    const [description, setDescription] = useState('');
-    const [name, setName] = useState('');
-    const [price, setPrice] = useState('');
-    const [lat, setLat] = useState('');
-    const [lng, setLng] = useState('');
-    const [previewImg, setPreviewImg] = useState('');
-    const [imgOne, setImgOne] = useState('');
-    const [imgTwo, setImgTwo] = useState('');
-    const [imgThree, setImgThree] = useState('');
-    const [imgFour, setImgFour] = useState('');
+    const { spotId } = useParams();
+    const [country, setCountry] = useState(spotInfo?.country);
+    const [address, setAddress] = useState(spotInfo?.address);
+    const [city, setCity] = useState(spotInfo?.city);
+    const [state, setState] = useState(spotInfo?.state);
+    const [description, setDescription] = useState(spotInfo?.description);
+    const [name, setName] = useState(spotInfo?.name);
+    const [price, setPrice] = useState(spotInfo?.price);
+    const [lat, setLat] = useState(spotInfo?.lat);
+    const [lng, setLng] = useState(spotInfo?.lng);
     const [errors, setErrors] = useState({});
 
     const handleSubmit = async (e) => {
@@ -37,28 +36,23 @@ export const SpotForm = () => {
             description,
             price
         }
-
-        const res = await dispatch(createSpot(spot))
+        console.log('before dispatch', spot)
+        const res = await dispatch(updateSpot(spot, spotId))
 
 
         if(res.errors) {
             const errors = res.errors
+            console.log(errors)
             if(description.length < 30) errors.description = "Description needs a minimum of 30 characters"
-            if(previewImg === "") errors.previewImg = "Preview image is required"
-            if(!(urlCheck(previewImg)) ) errors.previewImgInvalid = "Image URL must end in .png, .jpg, or .jpeg"
-            if (!(urlCheck(imgOne)) && imgOne !== '') errors.imgOneInvalid = "Image URL must end in .png, .jpg, or .jpeg";
-            if (!(urlCheck(imgTwo)) && imgTwo !== '') errors.imgTwoInvalid = "Image URL must end in .png, .jpg, or .jpeg";
-            if (!(urlCheck(imgThree)) && imgThree !== '') errors.imgThreeInvalid = "Image URL must end in .png, .jpg, or .jpeg";
-            if (!(urlCheck(imgFour)) && imgFour !== '') errors.imgFourInvalid = "Image URL must end in .png, .jpg, or .jpeg";
+            // if(previewImg === "") errors.previewImg = "Preview image is required"
+            // if(!(urlCheck(previewImg)) ) errors.previewImgInvalid = "Image URL must end in .png, .jpg, or .jpeg"
+            // if (!(urlCheck(imgOne)) && imgOne !== '') errors.imgOneInvalid = "Image URL must end in .png, .jpg, or .jpeg";
+            // if (!(urlCheck(imgTwo)) && imgTwo !== '') errors.imgTwoInvalid = "Image URL must end in .png, .jpg, or .jpeg";
+            // if (!(urlCheck(imgThree)) && imgThree !== '') errors.imgThreeInvalid = "Image URL must end in .png, .jpg, or .jpeg";
+            // if (!(urlCheck(imgFour)) && imgFour !== '') errors.imgFourInvalid = "Image URL must end in .png, .jpg, or .jpeg";
             setErrors(errors)
         } else {
-            await dispatch(addImageToSpot(res, true, previewImg))
-            if(urlCheck(imgOne)) await dispatch(addImageToSpot(res, false, imgOne))
-            if(urlCheck(imgTwo)) await dispatch(addImageToSpot(res, false, imgTwo))
-            if(urlCheck(imgThree)) await dispatch(addImageToSpot(res, false, imgThree))
-            if(urlCheck(imgFour)) await dispatch(addImageToSpot(res, false, imgFour))
-
-            history.push(`/spots/${res}`)
+            history.push(`/spots/${spot.id}`)
 
             setAddress('')
             setCity('')
@@ -67,26 +61,30 @@ export const SpotForm = () => {
             setName('')
             setDescription('')
             setPrice('')
-            setPreviewImg('')
-            setImgOne('')
-            setImgTwo('')
-            setImgThree('')
-            setImgFour('')
+            // setPreviewImg('')
+            // setImgOne('')
+            // setImgTwo('')
+            // setImgThree('')
+            // setImgFour('')
             setErrors({})
         }
     }
 
     useEffect(() => {
+        dispatch(getSpotById(spotId))
+    }, [dispatch])
+
+    useEffect(() => {
     }, [address, city, state, country, lat, lng, name, description, price])
 
-    const urlCheck = (url) => {
-        return ( url.endsWith('.jpg') || url.endsWith('.png') || url.endsWith('.jpeg'))
-    }
+    // const urlCheck = (url) => {
+    //     return ( url.endsWith('.jpg') || url.endsWith('.png') || url.endsWith('.jpeg'))
+    // }
 
     return (
         <div id='create-spot-content'>
             <h2 className='create-spot-title'>
-                Create a new Spot
+                Update your Spot
             </h2>
             <p className="spot-title-description-1">
                 Where's your place located?
@@ -202,7 +200,7 @@ export const SpotForm = () => {
                 <div className="spot-images-info">
                     Competitive pricing can help your listing stand out and rank higher in search results.
                 </div>
-                <div className="spot-images-container">
+                {/* <div className="spot-images-container">
                     <label className="spot-review-image-input">
                         <input type='text' placeholder="Preview Image URL" value={previewImg} onChange={(e) => setPreviewImg(e.target.value)}/>
                     </label>
@@ -224,7 +222,7 @@ export const SpotForm = () => {
                         <input type='text' placeholder="Image URL" value={imgFour} onChange={(e) => setImgFour(e.target.value)}/>
                     </label>
                     {errors.imgFourInvalid && <span className="error">{errors.imgFourInvalid}</span>}
-                </div>
+                </div> */}
                 <div>
                     <hr class="thick-line"/>
                 </div>

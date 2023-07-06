@@ -2,7 +2,7 @@ import { csrfFetch } from "./csrf";
 
 const GET_SPOTS = 'spots/getSpots'
 const RECEIVE_SPOT = 'spots/receiveSpot'
-
+const UPDATE_SPOT = 'spots/updateSpot'
 
 const getSpots = (spots) => ({
     type: GET_SPOTS,
@@ -12,6 +12,11 @@ const getSpots = (spots) => ({
 const receiveSpot = (spot) => ({
     type: RECEIVE_SPOT,
     spot,
+})
+
+const editSpot = (spot) => ({
+    type: UPDATE_SPOT,
+    spot
 })
 
 export const fetchSpots = () => async (dispatch) => {
@@ -50,6 +55,26 @@ export const createSpot = (spot) => async (dispatch) => {
     }
 }
 
+export const updateSpot = (spot, id) => async (dispatch) => {
+    try {
+        const res = await csrfFetch(`/api/spots/${id}`, {
+            method: 'PUT',
+            headers: {'Content-type': 'application/json'},
+            body: JSON.stringify(spot)
+        })
+        if(res.ok) {
+            const spotEdit = await res.json();
+            dispatch(editSpot(spotEdit))
+            return spotEdit.id;
+        } else {
+            const errors = await res.json()
+            return errors
+        }
+    } catch (err) {
+        return await err.json()
+    }
+}
+
 export const addImageToSpot = (spotId, preview, url) => async (dispatch) => {
     const res = await csrfFetch(`/api/spots/${spotId}/images`, {
         method: 'POST',
@@ -78,6 +103,8 @@ const spotsReducer = (state = initialState, action) => {
       case RECEIVE_SPOT:
         const spotState = initialState.singleSpot;
         return {...state, singleSpot: action.spot}
+      case UPDATE_SPOT:
+        return {...state, allSpots: {...state.allSpots, [action.spot.id]: action.spot}}
       default:
         return state;
     }

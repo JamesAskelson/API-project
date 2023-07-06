@@ -415,21 +415,18 @@ router.get('/:id', async (req, res) => {
 router.put('/:id', restoreUser, requireAuth, validateSpot, async(req, res) => {
   let { address, city, state, country, lat, lng, name, description, price } = req.body
   let spot = await Spot.findByPk(req.params.id)
-
   if(!spot) {
     res.status(404)
     return res.json({
       "message": "Spot couldn't be found"
     })
   }
-
   if(spot.ownerId !== req.user.id) {
     res.status(403)
     return res.json({
       "message": "Forbidden"
     })
   }
-
   if(address) {
     spot.address = address;
   }
@@ -457,9 +454,7 @@ router.put('/:id', restoreUser, requireAuth, validateSpot, async(req, res) => {
   if(price) {
     spot.price = price;
   }
-
   await spot.save()
-
   res.json(spot)
 })
 

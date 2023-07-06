@@ -6,7 +6,8 @@ import Navigation from "./components/Navigation";
 import { SpotIndex } from "./components/Spots/SpotIndex/SpotIndex.js";
 import { SpotShow } from "./components/Spots/SpotShow/SpotShow.js";
 import { SpotForm } from "./components/Spots/SpotForm/SpotForm";
-
+import { UserSpotIndex } from "./components/Spots/UserSpotIndex/UserSpotIndex";
+import { EditSpotForm } from "./components/Spots/EditSpotForm/EditSpotForm";
 
 
 function App() {
@@ -28,6 +29,12 @@ function App() {
         </Route>
         <Route path='/spots/new'>
           <SpotForm spots={spots}/>
+        </Route>
+        <Route path='/spots/current'>
+          <UserSpotIndex spots={spots}/>
+        </Route>
+        <Route exact path='/spots/:spotId/edit'>
+          <EditSpotForm />
         </Route>
         <Route exact path='/spots/:spotId'>
           <SpotShow spots={spots}/>
