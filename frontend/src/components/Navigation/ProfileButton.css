@@ -3,11 +3,11 @@
   }
 
   .profile-dropdown {
-    padding: 5px 10px;
+    padding: 0px 20px;
     border: 2px solid black;
     position: absolute;
-    bottom: 79%;
-    right: 0;
+    top: 64px;
+    right: 20px;
     background-color: white;
   }
 

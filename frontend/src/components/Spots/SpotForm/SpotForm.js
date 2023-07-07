@@ -197,10 +197,10 @@ export const SpotForm = () => {
                     <hr class="thick-line"/>
                 </div>
                 <div className="spot-images-title">
-                    Set a base price for your spot
+                    Liven up your spot with photos
                 </div>
                 <div className="spot-images-info">
-                    Competitive pricing can help your listing stand out and rank higher in search results.
+                    Submit a link to at least one photo to publish your spot.
                 </div>
                 <div className="spot-images-container">
                     <label className="spot-review-image-input">

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { updateSpot, getSpotById } from "../../../store/spots";
+import { updateSpot, getSpotById, clearState } from "../../../store/spots";
 import './EditSpotForm.css'
 
 
@@ -11,15 +11,20 @@ export const EditSpotForm = () => {
     console.log('spot info',spotInfo)
     const history = useHistory();
     const { spotId } = useParams();
-    const [country, setCountry] = useState(spotInfo?.country);
-    const [address, setAddress] = useState(spotInfo?.address);
-    const [city, setCity] = useState(spotInfo?.city);
-    const [state, setState] = useState(spotInfo?.state);
-    const [description, setDescription] = useState(spotInfo?.description);
-    const [name, setName] = useState(spotInfo?.name);
-    const [price, setPrice] = useState(spotInfo?.price);
-    const [lat, setLat] = useState(spotInfo?.lat);
-    const [lng, setLng] = useState(spotInfo?.lng);
+    const [country, setCountry] = useState('');
+    const [address, setAddress] = useState('');
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
+    const [description, setDescription] = useState('');
+    const [name, setName] = useState('');
+    const [price, setPrice] = useState('');
+    const [lat, setLat] = useState('');
+    const [lng, setLng] = useState('');
+    // const [previewImg, setPreviewImg] = useState('');
+    // const [imgOne, setImgOne] = useState('');
+    // const [imgTwo, setImgTwo] = useState('');
+    // const [imgThree, setImgThree] = useState('');
+    // const [imgFour, setImgFour] = useState('');
     const [errors, setErrors] = useState({});
 
     const handleSubmit = async (e) => {
@@ -36,13 +41,13 @@ export const EditSpotForm = () => {
             description,
             price
         }
-        console.log('before dispatch', spot)
+        // console.log('before dispatch', spot)
         const res = await dispatch(updateSpot(spot, spotId))
 
 
         if(res.errors) {
             const errors = res.errors
-            console.log(errors)
+            // console.log(errors)
             if(description.length < 30) errors.description = "Description needs a minimum of 30 characters"
             // if(previewImg === "") errors.previewImg = "Preview image is required"
             // if(!(urlCheck(previewImg)) ) errors.previewImgInvalid = "Image URL must end in .png, .jpg, or .jpeg"
@@ -52,7 +57,7 @@ export const EditSpotForm = () => {
             // if (!(urlCheck(imgFour)) && imgFour !== '') errors.imgFourInvalid = "Image URL must end in .png, .jpg, or .jpeg";
             setErrors(errors)
         } else {
-            history.push(`/spots/${spot.id}`)
+            history.push(`/spots/${spotId}`)
 
             setAddress('')
             setCity('')
@@ -72,10 +77,27 @@ export const EditSpotForm = () => {
 
     useEffect(() => {
         dispatch(getSpotById(spotId))
-    }, [dispatch])
+    }, [dispatch, spotId])
 
     useEffect(() => {
-    }, [address, city, state, country, lat, lng, name, description, price])
+        setCountry(spotInfo?.country)
+        setAddress(spotInfo?.address);
+        setCity(spotInfo?.city);
+        setState(spotInfo?.state);
+        setDescription(spotInfo?.description);
+        setName(spotInfo?.name);
+        setPrice(spotInfo?.price);
+        setLat(spotInfo?.lat);
+        setLng(spotInfo?.lng);
+    }, [spotInfo])
+
+    useEffect(() => {
+        return () =>
+        {
+            console.log('in the cleanup function')
+            dispatch(clearState())
+        }
+    }, [])
 
     // const urlCheck = (url) => {
     //     return ( url.endsWith('.jpg') || url.endsWith('.png') || url.endsWith('.jpeg'))
@@ -195,10 +217,10 @@ export const EditSpotForm = () => {
                     <hr class="thick-line"/>
                 </div>
                 <div className="spot-images-title">
-                    Set a base price for your spot
+                    Liven up your spot with photos
                 </div>
                 <div className="spot-images-info">
-                    Competitive pricing can help your listing stand out and rank higher in search results.
+                    Submit a link to at least one photo to publish your spot.
                 </div>
                 {/* <div className="spot-images-container">
                     <label className="spot-review-image-input">

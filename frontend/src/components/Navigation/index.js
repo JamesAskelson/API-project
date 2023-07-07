@@ -8,6 +8,9 @@ import "./Navigation.css";
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
 
+  
+
+
   return (
     <ul className="navi-icons">
       <li>
@@ -22,7 +25,7 @@ function Navigation({ isLoaded }) {
         </li>
       )}
     </ul>
-    
+
   );
 }
 
