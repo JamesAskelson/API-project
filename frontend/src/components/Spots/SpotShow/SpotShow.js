@@ -8,6 +8,7 @@ import { getReviewById } from '../../../store/reviews'
 export const SpotShow = () => {
     const dispatch = useDispatch()
     const { spotId } = useParams()
+    const user = useSelector(state => Object.values(state.session.user))
     const spot = useSelector(state => state.spots.singleSpot)
     const reviews = useSelector(state => Object.values(state?.reviews?.spotReviews))
 
@@ -24,6 +25,7 @@ export const SpotShow = () => {
     // console.log('spotshow spot', spot)
     console.log('reviews', reviews)
     // console.log(createDate)
+    console.log(user)
 
     useEffect(() => {
         dispatch(getSpotById(spotId))
@@ -33,9 +35,11 @@ export const SpotShow = () => {
     if (!spot) return null;
 
 
-        const handleClick = () => {
-          alert('Feature Coming Soon...');
-        };
+    const handleClick = () => {
+        alert('Feature Coming Soon...');
+    };
+
+
 
 
     return (
@@ -84,7 +88,7 @@ export const SpotShow = () => {
                             </p>
                         </div>
                         <div className='rating'>
-                            ★{spot?.avgRating} • {spot?.reviewCount} reviews
+                            ★ {reviews.length ? `${spot?.avgRating} • ${spot?.reviewCount} reviews` : 'New'}
                         </div>
                     </div>
                     <div className='reserve-button'>
@@ -97,7 +101,7 @@ export const SpotShow = () => {
             <hr/>
                 <div>
                     <h2>
-                         ★{spot?.avgRating} • {spot?.reviewCount} reviews
+                        ★ {reviews.length ? `${spot?.avgRating} • ${spot?.reviewCount} reviews` : 'New'}
                     </h2>
                 </div>
                 {reviews?.map( (review) => (
