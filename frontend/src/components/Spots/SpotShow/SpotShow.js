@@ -2,45 +2,75 @@ import './SpotShow.css'
 import { getSpotById } from '../../../store/spots'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { getReviewById } from '../../../store/reviews'
+import OpenModalButton from '../../OpenModalButton'
+import { PostReviewModal } from '../../PostReviewModal/PostReview'
 
 export const SpotShow = () => {
     const dispatch = useDispatch()
     const { spotId } = useParams()
-    const user = useSelector(state => Object.values(state.session.user))
     const spot = useSelector(state => state.spots.singleSpot)
+    const user = useSelector(state => (state.session.user))
     const reviews = useSelector(state => Object.values(state?.reviews?.spotReviews))
-
-    const formatDate = (createdAtTime) => {
-        const date = new Date(createdAtTime);
-        return date.toLocaleString('en-US', { month: 'long', year: 'numeric'});
-    }
-
     const previewSpotImages = spot?.SpotImages?.filter(img => img.preview === true)
     const otherSpotImages = spot?.SpotImages?.filter(img => img.preview === false)
-    // console.log('preview', previewSpotImages.url)
-    // console.log('preview url', previewSpotImages.url)
-    // console.log('rest', otherSpotImages)
-    // console.log('spotshow spot', spot)
+    // const [hasReviewed, setHasReviewed] = useState(false);
+    console.log('user', user)
+    console.log('spot', spot)
     console.log('reviews', reviews)
-    // console.log(createDate)
-    console.log(user)
 
     useEffect(() => {
         dispatch(getSpotById(spotId))
         dispatch(getReviewById(spotId))
     }, [dispatch, spotId])
 
-    if (!spot) return null;
+
+    const userHasReview = () => {
+        const userReview = reviews.find(review => review.userId === user.id)
+        console.log('userReview', userReview)
+        if(userReview) {
+            return true;
+        }
+        return false;
+    }
+
+    // useEffect(() => {
+    // }, [reviews])
+
+
+    // console.log('userReview', userReview)
+    // setHasReviewed(userReview);
 
 
     const handleClick = () => {
         alert('Feature Coming Soon...');
     };
 
+    const newReviewsText = () => {
+        if(reviews.length < 1) {
+            return <p>Be the first to post a review</p>
+        }
+    }
 
+    const formatDate = (createdAtTime) => {
+        const date = new Date(createdAtTime);
+        return date.toLocaleString('en-US', { month: 'long', year: 'numeric'});
+    }
 
+    const reviewInfo = () => {
+        if(reviews.length > 1) {
+            return `★ ${spot?.avgRating} • ${spot?.reviewCount} reviews`
+        } else if (reviews.length === 1) {
+            return `★ ${spot?.avgRating} • ${spot?.reviewCount} review`
+        } else {
+            return 'New'
+        }
+    }
+
+    // ★ {reviews.length ? `${spot?.avgRating} • ${spot?.reviewCount} reviews` : 'New'}
+
+    if (!spot) return null;
 
     return (
         <div id='spot-details-container'>
@@ -88,7 +118,7 @@ export const SpotShow = () => {
                             </p>
                         </div>
                         <div className='rating'>
-                            ★ {reviews.length ? `${spot?.avgRating} • ${spot?.reviewCount} reviews` : 'New'}
+                            {reviewInfo()}
                         </div>
                     </div>
                     <div className='reserve-button'>
@@ -101,13 +131,24 @@ export const SpotShow = () => {
             <hr/>
                 <div>
                     <h2>
-                        ★ {reviews.length ? `${spot?.avgRating} • ${spot?.reviewCount} reviews` : 'New'}
+                    {reviewInfo()}
                     </h2>
                 </div>
-                {reviews?.map( (review) => (
-                    <div className='individual-review'>
+                {newReviewsText()}
+                {user && userHasReview() === false && spot?.Owner?.id !== user.id && (
+                    <OpenModalButton
+                    buttonText="Post Your Review"
+                    modalComponent={<PostReviewModal spotId={spotId}/>}
+                  />
+                )}
+                {reviews?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((review) => {
+                    console.log('firstName', review?.User?.firstName);
+                    console.log('lastName', review?.User?.lastName);
+
+                    return (
+                        <div className='individual-review'>
                         <div className='review-name'>
-                            {review?.User?.firstName}
+                            {review?.User?.firstName} {review?.User?.lastName}
                         </div>
                         <div className='review-date'>
                             {formatDate(review?.createdAt)}
@@ -115,8 +156,9 @@ export const SpotShow = () => {
                         <div className='review'>
                             {review?.review}
                         </div>
-                    </div>
-                ))}
+                        </div>
+                    );
+                    })}
         </div>
     )
 }

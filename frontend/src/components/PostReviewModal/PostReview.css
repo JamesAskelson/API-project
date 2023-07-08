@@ -1,0 +1,11 @@
+#review-stars-container {
+    display: flex;
+}
+
+.filled{
+    color: black;
+}
+
+.empty {
+    color: grey;
+}
