@@ -641,7 +641,7 @@ router.get(
             }
           })
 
-          spotObj.avgRating = reviewAvg / reviewCount;
+          spotObj.avgRating = (reviewAvg / reviewCount).toFixed(1);
 
           let previewImg = await SpotImage.findOne({
             where: {

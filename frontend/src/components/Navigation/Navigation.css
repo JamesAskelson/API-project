@@ -12,3 +12,8 @@ ul {
   border-bottom: 2px solid grey;
   padding-bottom: 20px;
 }
+
+.create-a-spot-link {
+  margin-left: auto;
+  padding-right: 20px;
+}

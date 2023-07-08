@@ -2,7 +2,7 @@ import './SpotShow.css'
 import { getSpotById } from '../../../store/spots'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { getReviewById } from '../../../store/reviews'
 import OpenModalButton from '../../OpenModalButton'
 import { PostReviewModal } from '../../PostReviewModal/PostReview'
@@ -59,6 +59,8 @@ export const SpotShow = () => {
     }
 
     const reviewInfo = () => {
+        console.log('avg-rating', spot?.avgRating)
+        console.log(`review count`, spot?.reviewCount)
         if(reviews.length > 1) {
             return `★ ${spot?.avgRating} • ${spot?.reviewCount} reviews`
         } else if (reviews.length === 1) {

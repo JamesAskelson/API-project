@@ -2,6 +2,10 @@
     display: none;
   }
 
+  #user-icon-button:hover {
+    cursor: pointer
+  }
+
   .profile-dropdown {
     padding: 0px 20px;
     border: 2px solid black;
@@ -9,6 +13,10 @@
     top: 64px;
     right: 20px;
     background-color: white;
+  }
+
+  .profile-dropdown li:hover {
+    cursor: pointer;
   }
 
   .dropdown-logout-button {

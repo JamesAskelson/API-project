@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSpots } from "../../../store/spots";
 import './UserSpotIndex.css'
 import { SpotIndexItem } from "../SpotIndexItem/SpotIndexItem";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 
 
 export const UserSpotIndex = () => {
     const dispatch = useDispatch()
+    const history = useHistory();
     const user = useSelector(state => Object.values(state.session.user))
     const spots = useSelector(state => Object.values(state.spots.allSpots))
     const userSpots = spots.filter(spot => spot?.ownerId === user[0]);
@@ -21,6 +22,8 @@ export const UserSpotIndex = () => {
     useEffect(() => {
         dispatch(fetchSpots());
     }, [dispatch])
+
+    if(!user) history.push('/')
 
     return (
         <div>

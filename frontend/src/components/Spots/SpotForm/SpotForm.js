@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { addImageToSpot, createSpot } from "../../../store/spots";
 import './SpotForm.css'
 
 export const SpotForm = () => {
+    const user = useSelector(state => state.session.user)
     const dispatch = useDispatch();
     const history = useHistory();
     const [country, setCountry] = useState('');
@@ -82,6 +83,8 @@ export const SpotForm = () => {
     const urlCheck = (url) => {
         return ( url.endsWith('.jpg') || url.endsWith('.png') || url.endsWith('.jpeg'))
     }
+
+    if(!user) history.push('/')
 
     return (
         <div id='create-spot-content'>

@@ -7,6 +7,7 @@ import './EditSpotForm.css'
 
 export const EditSpotForm = () => {
     const dispatch = useDispatch();
+    const user = useSelector(state => state.session.user)
     const spotInfo = useSelector(state => state?.spots?.singleSpot)
     console.log('spot info',spotInfo)
     const history = useHistory();
@@ -102,6 +103,8 @@ export const EditSpotForm = () => {
     // const urlCheck = (url) => {
     //     return ( url.endsWith('.jpg') || url.endsWith('.png') || url.endsWith('.jpeg'))
     // }
+
+    if(!user) history.push('/')
 
     return (
         <div id='create-spot-content'>

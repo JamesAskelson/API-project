@@ -3,6 +3,7 @@ import { csrfFetch } from './csrf';
 const GET_REVIEWS = 'reviews/getReviews';
 const RECEIVE_REVIEW = 'reviews/reviewReview';
 
+
 const getReviews = (reviews) => ({
     type: GET_REVIEWS,
     reviews
@@ -12,6 +13,8 @@ const receiveReview = (review) => ({
     type: RECEIVE_REVIEW,
     review
 })
+
+
 
 export const getReviewById = (id) => async (dispatch) => {
     const res = await csrfFetch(`/api/spots/${id}/reviews`)
@@ -63,4 +66,4 @@ const reviewsReducer = (state = initialState, action) => {
     }
 }
 
-export default reviewsReducer
+export default reviewsReducer;

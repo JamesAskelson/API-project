@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 const GET_SPOTS = 'spots/getSpots'
 const RECEIVE_SPOT = 'spots/receiveSpot'
 const UPDATE_SPOT = 'spots/updateSpot'
+const REMOVE_SPOT = 'spots/removeSpot'
 const CLEAR_STATE = 'spots/clearState'
 
 const getSpots = (spots) => ({
@@ -20,9 +21,15 @@ const editSpot = (spot) => ({
     spot
 })
 
+const removeSpot = (spotId) => ({
+    type: REMOVE_SPOT,
+    spotId
+})
+
 export const clearState = () => ({
     type: CLEAR_STATE
 })
+
 
 export const fetchSpots = () => async (dispatch) => {
     const res = await csrfFetch('/api/spots');
@@ -95,6 +102,19 @@ export const addImageToSpot = (spotId, preview, url) => async (dispatch) => {
     }
 }
 
+export const deleteSpot = (spotId) => async (dispatch) => {
+    const res = await csrfFetch(`/api/spots/${spotId}`, {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'}
+    });
+
+    if(res.ok) {
+        const spot = await res.json()
+        dispatch(removeSpot(spotId))
+        return spot
+    }
+}
+
 const initialState = { allSpots: {}, singleSpot: {}}
 
 const spotsReducer = (state = initialState, action) => {
@@ -110,6 +130,10 @@ const spotsReducer = (state = initialState, action) => {
         return {...state, singleSpot: action.spot}
       case UPDATE_SPOT:
         return {...state, allSpots: {...state.allSpots, [action.spot.id]: action.spot}}
+      case REMOVE_SPOT:
+        const spotsState = {...initialState.allSpots}
+        delete spotsState[action.spotId]
+        return spotsState;
       case CLEAR_STATE:
         return {...state, allSpots: {...state.allSpots}, singleSpot: {}}
       default:
