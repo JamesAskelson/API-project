@@ -45,6 +45,7 @@ export const SpotShow = () => {
     // setHasReviewed(userReview);
 
 
+
     const handleClick = () => {
         alert('Feature Coming Soon...');
     };
@@ -60,15 +61,22 @@ export const SpotShow = () => {
         return date.toLocaleString('en-US', { month: 'long', year: 'numeric'});
     }
 
+    const formatAverageRating = (avgRating) => {
+        return parseFloat(avgRating).toFixed(1);
+    };
+
     const reviewInfo = () => {
-        console.log('avg-rating', spot?.avgRating)
-        console.log(`review count`, spot?.reviewCount)
+
+        const averageRating = spot?.avgRating;
+
+        // console.log('avg-rating', spot?.avgRating)
+        // console.log(`review count`, spot?.reviewCount)
         if(reviews.length > 1) {
-            return `★ ${spot?.avgRating} • ${spot?.reviewCount} reviews`
+            return `★ ${formatAverageRating(averageRating)} • ${spot?.reviewCount} reviews`
         } else if (reviews.length === 1) {
-            return `★ ${spot?.avgRating} • ${spot?.reviewCount} review`
+            return `★ ${formatAverageRating(averageRating)} • ${spot?.reviewCount} review`
         } else {
-            return 'New'
+            return '★ New'
         }
     }
 
@@ -78,6 +86,7 @@ export const SpotShow = () => {
 
     return (
         <div id='spot-details-container'>
+            <div id='spot-details-main-content'>
             <div id='spot-name-location'>
                 <h2>
                     {spot.name}
@@ -132,7 +141,8 @@ export const SpotShow = () => {
                     </div>
                 </div>
             </div>
-            <hr/>
+            </div>
+            <hr className='spot-show-hr'/>
                 <div>
                     <h2>
                     {reviewInfo()}
@@ -152,7 +162,7 @@ export const SpotShow = () => {
                     return (
                         <div className='individual-review'>
                         <div className='review-name'>
-                            {review?.User?.firstName} {review?.User?.lastName}
+                            {review?.User?.firstName}
                         </div>
                         <div className='review-date'>
                             {formatDate(review?.createdAt)}
@@ -161,7 +171,9 @@ export const SpotShow = () => {
                             {review?.review}
                         </div>
                         <div>
-                            {user.id === review.userId && (
+                            {console.log('user', user)}
+                            {console.log('review', review)}
+                            {user !== null && user.id === review.userId && (
                                 <OpenModalButton
                                 buttonText="Delete your Review"
                                 modalComponent={<DeleteReviewModal review={review} spotId={review.spotId} />}

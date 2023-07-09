@@ -2,10 +2,10 @@
     max-width: 1000px;
     padding-left: 35px;
     padding-right: 35px;
-    border: 1px solid black;
     vertical-align: center;
     margin-left: auto;
     margin-right: auto;
+
 }
 
 #spot-all-images {
@@ -36,9 +36,7 @@
     align-items: stretch;
 }
 
-.spot-image {
 
-}
 
 .spot-image img {
     width: 100%;
@@ -66,6 +64,7 @@
     border-radius: 10px;
     width: 30%;
     height: 120px;
+    background-color: white;
 }
 
 .price-rating {
@@ -85,6 +84,11 @@
 .price-text {
     padding-top: 8px;
     padding-left: 4px;
+}
+
+.spot-show-hr {
+    border: none;
+    border-top: 1px solid black;
 }
 
 .rating {
@@ -119,4 +123,5 @@
 .review {
     font-size: 16px;
     padding-bottom: 40px;
+    word-wrap: break-word;
 }

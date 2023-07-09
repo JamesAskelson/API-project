@@ -11,7 +11,7 @@ export const SpotIndexItem = ({spot}) => {
                 <div id='spots-details-container'>
                     <div id='spot-city-state'>
                         <p>{`${spot.city}, ${spot.state}`}</p>
-                        <p>{`$${spot.price} night`}</p>
+                        <span className='spot-price'>${spot.price}</span>  night
                     </div>
                     <div id='spot-rating'>
                         {console.log(spot)}

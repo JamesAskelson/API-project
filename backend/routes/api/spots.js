@@ -371,7 +371,10 @@ router.get('/:id', async (req, res) => {
     attributes: {
       include: [
         [Sequelize.fn('COUNT', Sequelize.col('Reviews.id')), 'reviewCount'],
-        [Sequelize.fn("ROUND", Sequelize.fn("AVG", Sequelize.col("Reviews.stars")), 1), "avgRating"],
+        [
+          Sequelize.fn('AVG', Sequelize.col('Reviews.stars')),
+          'avgRating',
+        ],
       ],
     },
     include: [
@@ -642,6 +645,10 @@ router.get(
           })
 
           spotObj.avgRating = (reviewAvg / reviewCount).toFixed(1);
+
+          if(isNaN(spotObj.avgRating)) {
+            spotObj.avgRating = 0
+          }
 
           let previewImg = await SpotImage.findOne({
             where: {

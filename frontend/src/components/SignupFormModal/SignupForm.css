@@ -1,0 +1,45 @@
+#modal-content {
+    width: 20%;
+    padding: 0px 20px 0px;
+    border-radius: 20px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.email-username-container {
+    padding-bottom: 20px;
+}
+
+.email-username-container input{
+    width: 95%;
+}
+
+.firstname-lastname-container {
+    padding-bottom: 20px;
+}
+
+.firstname-lastname-container input{
+    width: 95%;
+}
+
+.password-confirm-container {
+    padding-bottom: 10px;
+}
+
+.password-confirm-container input{
+    width: 95%;
+}
+
+.submit-button-signup{
+    height: 40px;
+    box-shadow: 2px 2px 0px rgb(105, 100, 100);
+    color: white;
+    background-color: rgb(255, 107, 107);
+    margin-bottom: 20px;
+}
+
+.submit-button-signup:disabled{
+    height: 40px;
+    box-shadow: 2px 2px 0px rgb(105, 100, 100);
+    color: white;
+    background-color: rgb(201, 201, 201);
+}

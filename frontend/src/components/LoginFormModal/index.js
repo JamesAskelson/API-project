@@ -39,7 +39,7 @@ function LoginFormModal() {
         });
   };
 
-const isFormInvalid = !credential || !password;
+const isFormInvalid = credential.length < 4 || password.length < 6;
 
   return (
     <>
@@ -66,9 +66,9 @@ const isFormInvalid = !credential || !password;
             required
           />
         </label>
-        <button className="submit-button" type="submit" disabled={isFormInvalid}>Log In</button>
+        <button className="submit-button-login" type="submit" disabled={isFormInvalid}>Log In</button>
 
-        <Link className="demo-user-login-link" to="/" onClick={demoLogin} exact="true" >Demo User</Link>
+        <Link className="demo-user-login-link" to="/" onClick={demoLogin} exact="true" >Log in as Demo User</Link>
       </form>
     </>
   );

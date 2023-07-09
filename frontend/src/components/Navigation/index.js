@@ -15,7 +15,7 @@ function Navigation({ isLoaded }) {
     <ul className="navi-icons">
       <li>
         <NavLink exact to="/">
-          Home
+          <img src='https://i.imgur.com/uAZQt4q.png'/>
         </NavLink>
       </li>
       {sessionUser && (<NavLink className='create-a-spot-link' exact to='/spots/new'>Create a new Spot</NavLink>)}

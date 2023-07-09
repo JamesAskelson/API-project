@@ -24,8 +24,8 @@ export const DeleteReviewModal = ({review, spotId}) => {
             <h3>
                 Are you sure you want to delete this review?
             </h3>
-            <button onClick={onClick}>Yes (Delete Spot)</button>
-            <button onClick={closeModal}>No (Keep Spot)</button>
+            <button onClick={onClick}>Yes (Delete Review)</button>
+            <button onClick={closeModal}>No (Keep Review)</button>
         </>
     )
 }
