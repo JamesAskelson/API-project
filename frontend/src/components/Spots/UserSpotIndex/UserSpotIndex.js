@@ -5,7 +5,7 @@ import './UserSpotIndex.css'
 import { SpotIndexItem } from "../SpotIndexItem/SpotIndexItem";
 import { Link, useHistory } from "react-router-dom";
 import OpenModalButton from '../../OpenModalButton'
-import { DeleteSpotModal } from '../../DeleteSpotButton/DeleteSpot'
+import { DeleteSpotModal } from '../../DeleteSpotModal/DeleteSpot'
 
 
 

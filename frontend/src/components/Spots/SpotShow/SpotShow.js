@@ -6,6 +6,8 @@ import { useEffect } from 'react'
 import { getReviewById } from '../../../store/reviews'
 import OpenModalButton from '../../OpenModalButton'
 import { PostReviewModal } from '../../PostReviewModal/PostReview'
+import { DeleteReviewModal } from '../../DeleteReviewModal/DeleteReview'
+
 
 export const SpotShow = () => {
     const dispatch = useDispatch()
@@ -146,7 +148,7 @@ export const SpotShow = () => {
                 {reviews?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((review) => {
                     console.log('firstName', review?.User?.firstName);
                     console.log('lastName', review?.User?.lastName);
-
+                    console.log(review.userId)
                     return (
                         <div className='individual-review'>
                         <div className='review-name'>
@@ -157,6 +159,14 @@ export const SpotShow = () => {
                         </div>
                         <div className='review'>
                             {review?.review}
+                        </div>
+                        <div>
+                            {user.id === review.userId && (
+                                <OpenModalButton
+                                buttonText="Delete your Review"
+                                modalComponent={<DeleteReviewModal review={review} spotId={review.spotId} />}
+                              />
+                            )}
                         </div>
                         </div>
                     );

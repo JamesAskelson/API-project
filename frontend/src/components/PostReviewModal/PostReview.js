@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./PostReview.css";
-import { createReview } from "../../store/reviews";
+import { createReview, getUserReviews } from "../../store/reviews";
+import { getSpotById } from "../../store/spots";
+
 
 export function PostReviewModal({spotId}) {
     const dispatch = useDispatch();
@@ -27,19 +29,10 @@ export function PostReviewModal({spotId}) {
             stars: stars
         }
         return dispatch(createReview(newReview, spotId))
+            .then(() => dispatch(getSpotById(spotId)))
+            .then(() => dispatch(getUserReviews()))
             .then(closeModal)
-            .catch(async (res) => {console.log(res)});
     }
-
-
-
-    // const handleStarHover = (hoveredStars) => {
-    //     setStars(hoveredStars);
-    //   };
-
-    //   const handleStarClick = (clickedStars) => {
-    //     setStars(clickedStars);
-    //   };
 
     return (
         <div id='post-review-modal-container'>
