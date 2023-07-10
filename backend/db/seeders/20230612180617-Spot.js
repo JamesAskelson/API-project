@@ -18,7 +18,7 @@ module.exports = {
         lat: 42.353687,
         lng: -83.134912,
         name: 'Detroit Funtown USA',
-        description: 'Funnest place in Detroit!',
+        description: "Explore the thrilling attractions and endless excitement in Detroit's ultimate fun destination!",
         price: 156.45
       },
       {
@@ -30,7 +30,7 @@ module.exports = {
         lat: 40.7128,
         lng: -74.0060,
         name: 'New York Adventure Park',
-        description: 'Experience the thrill of the Big Apple!',
+        description: "Embark on an exhilarating journey through the heart of New York City and experience the true essence of the Big Apple!",
         price: 129.99
       },
       {
@@ -42,7 +42,7 @@ module.exports = {
         lat: 41.8781,
         lng: -87.6298,
         name: 'Windy City Funland',
-        description: 'Fun for the whole family!',
+        description: "Delight in a family-friendly adventure filled with non-stop fun and unforgettable memories in Chicago!",
         price: 79.99
       },
       {
@@ -54,7 +54,7 @@ module.exports = {
         lat: 34.0522,
         lng: -118.2437,
         name: 'LA Fun Zone',
-        description: 'Get ready for excitement and adventure!',
+        description: "Immerse yourself in a world of excitement and adventure at the vibrant LA Fun Zone in the heart of Los Angeles!",
         price: 179.99
       },
       {
@@ -66,7 +66,7 @@ module.exports = {
         lat: 25.7617,
         lng: -80.1918,
         name: 'Miami Fun Park',
-        description: 'Enjoy the sunshine and thrills in Miami!',
+        description: "Bask in the sunshine and indulge in thrilling experiences at Miami's premier destination for endless fun!",
         price: 149.99
       },
       {
@@ -78,7 +78,7 @@ module.exports = {
         lat: 37.7749,
         lng: -122.4194,
         name: 'Golden City Adventure Park',
-        description: 'Experience unforgettable moments in San Francisco!',
+        description: "Unleash your inner explorer and create lifelong memories at San Francisco's Golden City Adventure Park!",
         price: 199.99
       },
       {
@@ -90,7 +90,7 @@ module.exports = {
         lat: 47.6062,
         lng: -122.3321,
         name: 'Emerald City Funland',
-        description: 'Enter a world of fun and imagination in Seattle!',
+        description: "Step into a world of imagination and discover a spectrum of fun-filled activities in Seattle's Emerald City Funland!",
         price: 129.99
       },
       {
@@ -102,7 +102,7 @@ module.exports = {
         lat: 39.7392,
         lng: -104.9903,
         name: 'Rocky Mountain Adventure Park',
-        description: 'Experience adrenaline-pumping adventures in Denver!',
+        description: "Get your adrenaline pumping with thrilling adventures amidst the breathtaking beauty of Denver's Rocky Mountains!",
         price: 169.99
       },
       {
@@ -114,7 +114,7 @@ module.exports = {
         lat: 30.2672,
         lng: -97.7431,
         name: 'Austin Fun Zone',
-        description: 'Discover a world of fun and entertainment in Austin!',
+        description: "Dive into a realm of entertainment and discover boundless fun and excitement in Austin's vibrant Fun Zone!",
         price: 119.99
       },
       {
@@ -126,7 +126,7 @@ module.exports = {
         lat: 42.3601,
         lng: -71.0589,
         name: 'Boston Thrillville',
-        description: 'Get ready for thrills and excitement in Boston!',
+        description: "Brace yourself for heart-pounding thrills and exhilarating adventures in Boston's ultimate thrill destination!",
         price: 139.99
       },
       {
@@ -138,7 +138,7 @@ module.exports = {
         lat: 36.1627,
         lng: -86.7816,
         name: 'Music City Adventure Park',
-        description: 'Experience unforgettable adventures in Nashville!',
+        description: "Immerse yourself in the soulful melodies and embark on unforgettable adventures in Nashville's Music City Adventure Park!",
         price: 149.99
       },
       {
@@ -150,7 +150,7 @@ module.exports = {
         lat: 28.5383,
         lng: -81.3792,
         name: 'Magical Land of Fun',
-        description: 'Enter a world of magic and fun in Orlando!',
+        description: "Enter a realm of enchantment and experience the magic come to life at Orlando's Magical Land of Fun!",
         price: 189.99
       },
     ], {});
