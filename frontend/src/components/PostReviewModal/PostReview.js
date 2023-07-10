@@ -37,10 +37,11 @@ export function PostReviewModal({spotId}) {
     return (
         <div id='post-review-modal-container'>
             <form onSubmit={handleSubmit}>
-                <h2>
+                <h2 className="post-review-title">
                     How was your stay?
                 </h2>
                     <textarea
+                    className="post-review-textarea"
                     type="text"
                     placeholder='Leave your review here...'
                     value={reviewText}
@@ -92,7 +93,7 @@ export function PostReviewModal({spotId}) {
                         >
                             <i className="fa fa-star"></i>
                         </div>
-                        <div>
+                        <div className="review-stars-text">
                             stars
                         </div>
                     </div>

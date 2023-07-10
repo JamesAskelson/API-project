@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { updateSpot, getSpotById, clearState } from "../../../store/spots";
-import './EditSpotForm.css'
+import '../SpotForm/SpotForm.css'
 
 
 export const EditSpotForm = () => {

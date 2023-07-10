@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { addImageToSpot, createSpot } from "../../../store/spots";
+import { addImageToSpot, createSpot, deleteSpot } from "../../../store/spots";
 import './SpotForm.css'
 
 export const SpotForm = () => {
@@ -36,7 +36,8 @@ export const SpotForm = () => {
             lng,
             name,
             description,
-            price
+            price,
+            previewImg
         }
 
         const res = await dispatch(createSpot(spot))
@@ -53,13 +54,23 @@ export const SpotForm = () => {
             if (!(urlCheck(imgFour)) && imgFour !== '') errors.imgFourInvalid = "Image URL must end in .png, .jpg, or .jpeg";
             setErrors(errors)
         } else {
-            await dispatch(addImageToSpot(res, true, previewImg))
-            if(urlCheck(imgOne)) await dispatch(addImageToSpot(res, false, imgOne))
-            if(urlCheck(imgTwo)) await dispatch(addImageToSpot(res, false, imgTwo))
-            if(urlCheck(imgThree)) await dispatch(addImageToSpot(res, false, imgThree))
-            if(urlCheck(imgFour)) await dispatch(addImageToSpot(res, false, imgFour))
-
-            history.push(`/spots/${res}`)
+            if(previewImg === '' || (!urlCheck(previewImg)) || description.length < 30) {
+                if(description.length < 30) errors.description = "Description needs a minimum of 30 characters"
+                if(previewImg === "") errors.previewImg = "Preview image is required"
+                if(!(urlCheck(previewImg)) ) errors.previewImgInvalid = "Image URL must end in .png, .jpg, or .jpeg"
+                if (!(urlCheck(imgOne)) && imgOne !== '') errors.imgOneInvalid = "Image URL must end in .png, .jpg, or .jpeg";
+                if (!(urlCheck(imgTwo)) && imgTwo !== '') errors.imgTwoInvalid = "Image URL must end in .png, .jpg, or .jpeg";
+                if (!(urlCheck(imgThree)) && imgThree !== '') errors.imgThreeInvalid = "Image URL must end in .png, .jpg, or .jpeg";
+                if (!(urlCheck(imgFour)) && imgFour !== '') errors.imgFourInvalid = "Image URL must end in .png, .jpg, or .jpeg";
+                setErrors(errors)
+            } else {
+                await dispatch(addImageToSpot(res, true, previewImg))
+                if(urlCheck(imgOne)) await dispatch(addImageToSpot(res, false, imgOne))
+                if(urlCheck(imgTwo)) await dispatch(addImageToSpot(res, false, imgTwo))
+                if(urlCheck(imgThree)) await dispatch(addImageToSpot(res, false, imgThree))
+                if(urlCheck(imgFour)) await dispatch(addImageToSpot(res, false, imgFour))
+                history.push(`/spots/${res}`)
+            }
 
             setAddress('')
             setCity('')
@@ -78,7 +89,7 @@ export const SpotForm = () => {
     }
 
     useEffect(() => {
-    }, [address, city, state, country, lat, lng, name, description, price])
+    }, [address, city, state, country, lat, lng, name, description, price, previewImg])
 
     const urlCheck = (url) => {
         return ( url.endsWith('.jpg') || url.endsWith('.png') || url.endsWith('.jpeg'))

@@ -1,7 +1,8 @@
 #manage-spots-title {
     display: flex;
     flex-direction: column;
-    padding-bottom: 60px;
+    padding-bottom: 40px;
+    padding-left: 20px;
 }
 
 .manage-spots-title-text {
@@ -11,4 +12,10 @@
 
 .manage-spots-create-button {
     width: 150px;
+}
+
+#update-delete-spot-container {
+    display: flex;
+    padding-top: 30px;
+    gap: 10px;
 }

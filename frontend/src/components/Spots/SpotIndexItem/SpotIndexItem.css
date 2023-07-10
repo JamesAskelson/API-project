@@ -1,8 +1,12 @@
 #spot-main-container {
-    background-color: rgb(214, 214, 214);
+    background-color: rgb(179, 179, 179);
     padding: 5px;
 }
 
+.spot-link {
+    color: black;
+    text-decoration: none;
+}
 
 #spots-details-container {
   display: flex;

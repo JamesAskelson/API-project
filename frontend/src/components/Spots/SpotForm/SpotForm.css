@@ -2,12 +2,32 @@
     margin-left: auto;
     margin-right: auto;
     width: 40%;
-    border: 1px solid black;
     padding: 0px 10px;
+    background-color: rgb(210, 213, 255);
+    border-radius: 20px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#create-spot-content label {
+    font-weight: 800;
+}
+
+#create-spot-content input {
+    margin-bottom: 10px;
+}
+
+.create-spot-title{
+    font-size: 26px;
 }
 
 .spot-title-description-1 {
     font-weight: 800;
+    font-size: 18px;
+    margin-bottom: 2px;
+}
+
+.spot-title-description-2 {
+    margin-top: 0px;
 }
 
 .country-input{
@@ -28,8 +48,8 @@
 }
 
 .city-content {
-    flex-basis: 60%;
-    padding-right: 10px;
+    flex-basis: 70%;
+    padding-right: 0px;
 }
 
 .city-input{
@@ -42,6 +62,8 @@
     align-items: end;
     font-weight: 800;
     font-size: 20px;
+    padding-bottom: 10px;
+    margin-left: 4px;
 }
 
 
@@ -49,20 +71,27 @@
     display: flex;
     flex-direction: column;
     padding-left: 10px;
+
 }
 
 .lat-lng-content {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    width: auto;
 }
 
 .lat-content {
+    flex-basis: 50%;
+}
 
+.lng-content {
+    flex-basis: 45%;
 }
 
 .lat-input{
     display: flex;
     flex-direction: column;
+    margin-left: auto
 }
 
 .lat-lng-comma {
@@ -70,11 +99,26 @@
     align-items: end;
     font-weight: 800;
     font-size: 20px;
+    padding-bottom: 10px;
+    margin-right: auto;
+    margin-left: 4px;
 }
 
 .lng-input{
     display: flex;
     flex-direction: column;
+    margin-right: auto;
+}
+
+.spot-description-title {
+    margin-top: 5px;
+    margin-bottom: 0px;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.spot-description-info {
+    margin-top: 5px;
 }
 
 .spot-description-input {
@@ -84,10 +128,43 @@
     resize: vertical;
     width: 100%;
     height: 100px;
+    border: 1px solid black;
+}
+
+.spot-name-title {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 2px;
+}
+
+.spot-name-info {
+    margin-bottom: 10px;
+}
+
+.spot-name-input input {
+    width: 98%
+}
+
+.spot-price-title {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 2px;
 }
 
 .spot-price-input-container {
     display: flex
+}
+
+.spot-price-info {
+    margin-bottom: 10px;
+}
+
+.spot-price-input {
+    width: 100%
+}
+
+.spot-price-input input {
+    width: 98%;
 }
 
 .dollar-sign-icon {
@@ -114,7 +191,22 @@
     border-top: 2px solid black;
 }
 
+.spot-images-title {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.spot-images-info {
+    margin-bottom: 2px;
+}
+
+.spot-images-container input {
+    width: 98%
+}
+
 .spot-create-submit-button {
+    margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
     width: 25%;

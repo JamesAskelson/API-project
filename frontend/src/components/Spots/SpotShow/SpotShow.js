@@ -148,13 +148,16 @@ export const SpotShow = () => {
                     {reviewInfo()}
                     </h2>
                 </div>
-                {newReviewsText()}
                 {user && userHasReview() === false && spot?.Owner?.id !== user.id && (
-                    <OpenModalButton
-                    buttonText="Post Your Review"
-                    modalComponent={<PostReviewModal spotId={spotId}/>}
-                  />
+                    <div className='open-modal-button'>
+                        <OpenModalButton
+                        buttonText="Post Your Review"
+                        modalComponent={<PostReviewModal spotId={spotId}/>}
+                        />
+                  </div>
+
                 )}
+                {newReviewsText()}
                 {reviews?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((review) => {
                     console.log('firstName', review?.User?.firstName);
                     console.log('lastName', review?.User?.lastName);

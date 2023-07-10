@@ -8,17 +8,17 @@
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-.delete-spot-title {
+.delete-review-title {
     text-align: center;
     font-size: 26px;
 }
 
-#delete-spot-button-container {
+#delete-review-description {
     display: flex;
     flex-direction: column;
 }
 
-.delete-spot-confirm {
+.review-delete-confirm {
     width: 100%;
     height: 48px;
     border: 2px solid black;
@@ -29,9 +29,7 @@
     font-size: 14px;
 }
 
-
-
-.delete-spot-deny {
+.review-delete-deny {
     width: 100%;
     height: 48px;
     border: 2px solid black;
