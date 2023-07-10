@@ -9,7 +9,7 @@ export const EditSpotForm = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
     const spotInfo = useSelector(state => state?.spots?.singleSpot)
-    console.log('spot info',spotInfo)
+    // console.log('spot info',spotInfo)
     const history = useHistory();
     const { spotId } = useParams();
     const [country, setCountry] = useState('');
@@ -95,7 +95,7 @@ export const EditSpotForm = () => {
     useEffect(() => {
         return () =>
         {
-            console.log('in the cleanup function')
+            // console.log('in the cleanup function')
             dispatch(clearState())
         }
     }, [])

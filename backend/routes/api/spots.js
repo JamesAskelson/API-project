@@ -65,7 +65,7 @@ router.post('/:id/bookings', restoreUser, requireAuth, async(req, res) => {
   startDate = startDate.getTime()
   endDate = endDate.getTime()
 
-  console.log(startDate, endDate)
+  // console.log(startDate, endDate)
 
   let spot = await Spot.findByPk(req.params.id);
 
@@ -100,15 +100,15 @@ router.post('/:id/bookings', restoreUser, requireAuth, async(req, res) => {
 
       errors = []
       if(startDate >= bookingStart && startDate <= bookingEnd) {
-        console.log("startDate", startDate)
-        console.log("bookingStart", bookingStart)
-        console.log("bookingStart", bookingEnd)
+        // console.log("startDate", startDate)
+        // console.log("bookingStart", bookingStart)
+        // console.log("bookingStart", bookingEnd)
         errors.push(1)
       }
       if(endDate >= bookingStart && endDate <= bookingEnd){
-        console.log("endDate", endDate)
-        console.log("bookingStart", bookingStart)
-        console.log("bookingStart", bookingEnd)
+        // console.log("endDate", endDate)
+        // console.log("bookingStart", bookingStart)
+        // console.log("bookingStart", bookingEnd)
         errors.push(1)
       }
     })
@@ -163,7 +163,7 @@ router.post('/:id/reviews', restoreUser, requireAuth, validateReview, async (req
 
   if (existingReview) {
     res.status(500);
-    console.log("test")
+    // console.log("test")
     return res.json({
       "message": "User already has a review for this spot"
     });
@@ -400,7 +400,7 @@ router.get('/:id', async (req, res) => {
     group: ["Spot.id", "SpotImages.id", "Owner.id"]
   })
 
-  console.log(spot)
+  // console.log(spot)
 
   if(!spot) {
     res.status(404)
@@ -568,8 +568,8 @@ router.get(
 
     //////////////////////////////////
 
-    console.log(page)
-    console.log(size)
+    // console.log(page)
+    // console.log(size)
 
     if (page) {
       if (page < 1) {

@@ -18,9 +18,9 @@ export const SpotShow = () => {
     const previewSpotImages = spot?.SpotImages?.filter(img => img.preview === true)
     const otherSpotImages = spot?.SpotImages?.filter(img => img.preview === false)
     // const [hasReviewed, setHasReviewed] = useState(false);
-    console.log('user', user)
-    console.log('spot', spot)
-    console.log('reviews', reviews)
+    // console.log('user', user)
+    // console.log('spot', spot)
+    // console.log('reviews', reviews)
 
     useEffect(() => {
         dispatch(getSpotById(spotId))
@@ -30,7 +30,7 @@ export const SpotShow = () => {
 
     const userHasReview = () => {
         const userReview = reviews.find(review => review.userId === user.id)
-        console.log('userReview', userReview)
+        // console.log('userReview', userReview)
         if(userReview) {
             return true;
         }
@@ -159,9 +159,9 @@ export const SpotShow = () => {
                 )}
                 {newReviewsText()}
                 {reviews?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((review) => {
-                    console.log('firstName', review?.User?.firstName);
-                    console.log('lastName', review?.User?.lastName);
-                    console.log(review.userId)
+                    // console.log('firstName', review?.User?.firstName);
+                    // console.log('lastName', review?.User?.lastName);
+                    // console.log(review.userId)
                     return (
                         <div className='individual-review'>
                         <div className='review-name'>
@@ -174,8 +174,6 @@ export const SpotShow = () => {
                             {review?.review}
                         </div>
                         <div>
-                            {console.log('user', user)}
-                            {console.log('review', review)}
                             {user !== null && user.id === review.userId && (
                                 <OpenModalButton
                                 buttonText="Delete your Review"

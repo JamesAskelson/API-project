@@ -17,8 +17,8 @@ export const UserSpotIndex = () => {
     const history = useHistory();
     const user = useSelector(state => Object.values(state.session.user))
     const spots = useSelector(state => Object.values(state.spots.userSpots))
-    console.log('user',user)
-    console.log('spots', spots)
+    // console.log('user',user)
+    // console.log('spots', spots)
 
 
 

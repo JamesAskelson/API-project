@@ -8,12 +8,12 @@ export const DeleteSpotModal = ({spot}) => {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
-    console.log(spot)
+    // console.log(spot)
     const onClick = async (e) => {
         e.preventDefault();
         await dispatch(deleteSpot(spot))
         .then(closeModal)
-        .catch(async (res) => {console.log(res)});
+        // .catch(async (res) => {console.log(res)});
     }
 
     return (

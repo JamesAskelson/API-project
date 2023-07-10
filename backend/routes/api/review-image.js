@@ -21,7 +21,7 @@ router.delete('/:id', restoreUser, requireAuth, async(req, res) => {
     let review = await reviewImg.getReview()
 
 
-    console.log(review)
+    // console.log(review)
 
     if(review.userId !== req.user.id) {
         res.status(403)

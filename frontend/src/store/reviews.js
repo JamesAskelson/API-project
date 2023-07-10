@@ -55,7 +55,7 @@ export const createReview = (review, spotId) => async (dispatch, getState) => {
             const newReview = await res.json()
             const currentState = getState()
             const userData = currentState.session
-            console.log(userData)
+            // console.log(userData)
 
             newReview.User = userData.user
             dispatch(receiveReview(newReview))
@@ -91,7 +91,7 @@ const reviewsReducer = (state = initialState, action) => {
             return {...state, spotReviews: newState};
         case GET_REVIEWS_BY_USER:
             const userReviewsState = {};
-            console.log('action.reviews',action.reviews.Reviews)
+            // console.log('action.reviews',action.reviews.Reviews)
             action.reviews.Reviews.forEach((review) => {
                 userReviewsState[review.id] = review;
             })

@@ -11,7 +11,7 @@ router.delete('/:id', restoreUser, requireAuth, async(req, res) => {
 
     let spotImg = await SpotImage.unscoped().findByPk(req.params.id)
 
-    console.log(spotImg)
+    // console.log(spotImg)
 
     if(!spotImg) {
         res.status(404)
@@ -23,8 +23,8 @@ router.delete('/:id', restoreUser, requireAuth, async(req, res) => {
     let spot = await spotImg.getSpot()
 
 
-    console.log(Object.getOwnPropertyNames(SpotImage.prototype))
-    console.log("spot", spot)
+    // console.log(Object.getOwnPropertyNames(SpotImage.prototype))
+    // console.log("spot", spot)
 
     if(spot.ownerId !== req.user.id) {
         res.status(403)

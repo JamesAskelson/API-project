@@ -134,9 +134,9 @@ router.delete('/:id', restoreUser, requireAuth, async(req, res) => {
     currentTime = currentTime.getTime();
 
 
-    console.log("str",bookingStart)
-    console.log("cur",currentTime)
-    console.log("end",bookingEnd)
+    // console.log("str",bookingStart)
+    // console.log("cur",currentTime)
+    // console.log("end",bookingEnd)
 
     if(currentTime >= bookingStart && currentTime <= bookingEnd){
         res.status(403)

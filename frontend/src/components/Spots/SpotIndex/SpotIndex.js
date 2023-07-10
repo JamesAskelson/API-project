@@ -8,7 +8,7 @@ import { SpotIndexItem } from "../SpotIndexItem/SpotIndexItem";
 export const SpotIndex = () => {
     const dispatch = useDispatch()
     const spots = useSelector(state => Object.values(state.spots.allSpots))
-    console.log(spots)
+    // console.log(spots)
 
     useEffect(() => {
         dispatch(fetchSpots());
