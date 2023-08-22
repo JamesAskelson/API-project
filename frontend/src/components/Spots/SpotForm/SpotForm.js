@@ -22,55 +22,75 @@ export const SpotForm = () => {
     const [imgTwo, setImgTwo] = useState('');
     const [imgThree, setImgThree] = useState('');
     const [imgFour, setImgFour] = useState('');
-    const [errors, setErrors] = useState({});
+    const [errorValidation, setErrorValidation] = useState({});
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const spot = {
-            address,
-            city,
-            state,
-            country,
-            lat,
-            lng,
-            name,
-            description,
-            price,
-            previewImg
+
+        const errors= {}
+        if(!country) errors.country = "Country is required";
+        if(!address) errors.address = "Address is required";
+        if(!city) errors.city = "City is required";
+        if(!state) errors.state = "State is required";
+        if(description.length < 30) errors.description = "Description needs a minimum of 30 characters";
+        if(!name) errors.name = 'Name is required'
+        if(name.length > 50) errors.name = 'Name must be less than 50 characters';
+        if(isNaN(price) || price <= 0) errors.price = 'Price per day is required';
+        if(lat < -90 || lat > 90) errors.lat = "Latitude is not valid";
+        if(lng < -180 || lng > 180) errors.lng = "Longitude is not valid";
+        if(!previewImg) errors.previewImg = "Preview image is required";
+        if(!(urlCheck(previewImg)) ) errors.previewImgInvalid = "Image URL must end in .png, .jpg, or .jpeg";
+        if(imgOne){
+            if(!(urlCheck(imgOne))) errors.imgOneInvalid = "Image URL must end in .png, .jpg, or .jpeg";
         }
+        if(imgTwo){
+            if(!(urlCheck(imgTwo))) errors.imgTwoInvalid = "Image URL must end in .png, .jpg, or .jpeg";
+        }
+        if(imgThree){
+            if(!(urlCheck(imgThree))) errors.imgThreeInvalid = "Image URL must end in .png, .jpg, or .jpeg";
+        }
+        if(imgFour){
+            if(!(urlCheck(imgFour))) errors.imgFourInvalid = "Image URL must end in .png, .jpg, or .jpeg";
+        }
+        setErrorValidation({...errors})
 
-        const res = await dispatch(createSpot(spot))
-
-
-        if(res.errors) {
-            const errors = res.errors
-            if(description.length < 30) errors.description = "Description needs a minimum of 30 characters"
-            if(previewImg === "") errors.previewImg = "Preview image is required"
-            if(!(urlCheck(previewImg)) ) errors.previewImgInvalid = "Image URL must end in .png, .jpg, or .jpeg"
-            if (!(urlCheck(imgOne)) && imgOne !== '') errors.imgOneInvalid = "Image URL must end in .png, .jpg, or .jpeg";
-            if (!(urlCheck(imgTwo)) && imgTwo !== '') errors.imgTwoInvalid = "Image URL must end in .png, .jpg, or .jpeg";
-            if (!(urlCheck(imgThree)) && imgThree !== '') errors.imgThreeInvalid = "Image URL must end in .png, .jpg, or .jpeg";
-            if (!(urlCheck(imgFour)) && imgFour !== '') errors.imgFourInvalid = "Image URL must end in .png, .jpg, or .jpeg";
-            setErrors(errors)
-        } else {
-            if(previewImg === '' || (!urlCheck(previewImg)) || description.length < 30) {
-                if(description.length < 30) errors.description = "Description needs a minimum of 30 characters"
-                if(previewImg === "") errors.previewImg = "Preview image is required"
-                if(!(urlCheck(previewImg)) ) errors.previewImgInvalid = "Image URL must end in .png, .jpg, or .jpeg"
-                if (!(urlCheck(imgOne)) && imgOne !== '') errors.imgOneInvalid = "Image URL must end in .png, .jpg, or .jpeg";
-                if (!(urlCheck(imgTwo)) && imgTwo !== '') errors.imgTwoInvalid = "Image URL must end in .png, .jpg, or .jpeg";
-                if (!(urlCheck(imgThree)) && imgThree !== '') errors.imgThreeInvalid = "Image URL must end in .png, .jpg, or .jpeg";
-                if (!(urlCheck(imgFour)) && imgFour !== '') errors.imgFourInvalid = "Image URL must end in .png, .jpg, or .jpeg";
-                setErrors(errors)
-            } else {
-                await dispatch(addImageToSpot(res, true, previewImg))
-                if(urlCheck(imgOne)) await dispatch(addImageToSpot(res, false, imgOne))
-                if(urlCheck(imgTwo)) await dispatch(addImageToSpot(res, false, imgTwo))
-                if(urlCheck(imgThree)) await dispatch(addImageToSpot(res, false, imgThree))
-                if(urlCheck(imgFour)) await dispatch(addImageToSpot(res, false, imgFour))
-                history.push(`/spots/${res}`)
+        // if(previewImg === '' || (!urlCheck(previewImg)) || description.length < 30) {
+        //     if(description.length < 30) errors.description = "Description needs a minimum of 30 characters"
+        //     if(previewImg === "") errors.previewImg = "Preview image is required"
+        //     if(!(urlCheck(previewImg)) ) errors.previewImgInvalid = "Image URL must end in .png, .jpg, or .jpeg"
+        //     if (!(urlCheck(imgOne)) && imgOne !== '') errors.imgOneInvalid = "Image URL must end in .png, .jpg, or .jpeg";
+        //     if (!(urlCheck(imgTwo)) && imgTwo !== '') errors.imgTwoInvalid = "Image URL must end in .png, .jpg, or .jpeg";
+        //     if (!(urlCheck(imgThree)) && imgThree !== '') errors.imgThreeInvalid = "Image URL must end in .png, .jpg, or .jpeg";
+        //     if (!(urlCheck(imgFour)) && imgFour !== '') errors.imgFourInvalid = "Image URL must end in .png, .jpg, or .jpeg";
+        //         setErrorValidation(errors)
+        // } else {
+        //     // if(urlCheck(imgOne)) await dispatch(addImageToSpot(res, false, imgOne))
+        //     // if(urlCheck(imgTwo)) await dispatch(addImageToSpot(res, false, imgTwo))
+        //     // if(urlCheck(imgThree)) await dispatch(addImageToSpot(res, false, imgThree))
+        //     // if(urlCheck(imgFour)) await dispatch(addImageToSpot(res, false, imgFour))
+        //     }
+        console.log('errors', errors)
+        if(!Object.values(errors).length) {
+            const spot = {
+                address,
+                city,
+                state,
+                country,
+                lat,
+                lng,
+                name,
+                description,
+                price,
+                previewImg
             }
+            
+            const res = await dispatch(createSpot(spot))
+            await dispatch(addImageToSpot(res, true, previewImg))
+            if(imgOne) await dispatch(addImageToSpot(res, false, imgOne))
+            if(imgTwo) await dispatch(addImageToSpot(res, false, imgTwo))
+            if(imgThree) await dispatch(addImageToSpot(res, false, imgThree))
+            if(imgFour) await dispatch(addImageToSpot(res, false, imgFour))
 
             setAddress('')
             setCity('')
@@ -84,9 +104,12 @@ export const SpotForm = () => {
             setImgTwo('')
             setImgThree('')
             setImgFour('')
-            setErrors({})
+            setErrorValidation({})
+            history.push(`/spots/${res}`)
         }
+
     }
+
 
     useEffect(() => {
     }, [address, city, state, country, lat, lng, name, description, price, previewImg])
@@ -111,13 +134,13 @@ export const SpotForm = () => {
             <form className='spot-form' onSubmit={handleSubmit}>
                 <label className="country-input">
                     <div>
-                    Country {errors.country && <span className="error">{errors.country}</span>}
+                    Country {errorValidation.country && <span className="error">{errorValidation.country}</span>}
                     </div>
                     <input type='text' placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)}/>
                 </label>
                 <label className="address-input">
                     <div>
-                    Address {errors.address && <span className="error">{errors.address}</span>}
+                    Address {errorValidation.address && <span className="error">{errorValidation.address}</span>}
                     </div>
                     <input type='text' placeholder="Address" value={address} onChange={(e) => setAddress(e.target.value)}/>
                 </label>
@@ -125,7 +148,7 @@ export const SpotForm = () => {
                     <div className="city-content">
                         <label className="city-input">
                         <div>
-                            City {errors.city && <span className="error">{errors.city}</span>}
+                            City {errorValidation.city && <span className="error">{errorValidation.city}</span>}
                         </div>
                             <input type='text' placeholder="City" value={city} onChange={(e) => setCity(e.target.value)}/>
                         </label>
@@ -136,7 +159,7 @@ export const SpotForm = () => {
                     <div className="state-content">
                         <label className="state-input">
                         <div>
-                            State {errors.state && <span className="error">{errors.state}</span>}
+                            State {errorValidation.state && <span className="error">{errorValidation.state}</span>}
                         </div>
                             <input type='text' placeholder="State" value={state} onChange={(e) => setState(e.target.value)}/>
                         </label>
@@ -146,7 +169,7 @@ export const SpotForm = () => {
                     <div className="lat-content">
                         <label className="lat-input">
                             <div>
-                                Latitude {errors.lat && <span className="error">{errors.lat}</span>}
+                                Latitude {errorValidation.lat && <span className="error">{errorValidation.lat}</span>}
                             </div>
                             <input type='text' placeholder="Latitude" value={lat} onChange={(e) => setLat(e.target.value)}/>
                         </label>
@@ -157,7 +180,7 @@ export const SpotForm = () => {
                     <div className="lng-content">
                         <label className="lng-input">
                             <div>
-                                Longitude {errors.lng && <span className="error">{errors.lng}</span>}
+                                Longitude {errorValidation.lng && <span className="error">{errorValidation.lng}</span>}
                             </div>
                             <input type='text' placeholder="Longitude" value={lng} onChange={(e) => setLng(e.target.value)}/>
                         </label>
@@ -175,7 +198,7 @@ export const SpotForm = () => {
                 <label className="spot-description-input">
                     <textarea type='text' placeholder="Please write at least 30 characters" value={description} onChange={(e) => setDescription(e.target.value)}/>
                 </label>
-                {errors.description && <span className="error">{errors.description}</span>}
+                {errorValidation.description && <span className="error">{errorValidation.description}</span>}
                 <div>
                     <hr class="thick-line"/>
                 </div>
@@ -188,7 +211,7 @@ export const SpotForm = () => {
                 <label className="spot-name-input">
                     <input type='text' placeholder="Name of your spot" value={name} onChange={(e) => setName(e.target.value)}/>
                 </label>
-                {errors.name && <span className="error">{errors.name}</span>}
+                {errorValidation.name && <span className="error">{errorValidation.name}</span>}
                 <div>
                     <hr class="thick-line"/>
                 </div>
@@ -206,7 +229,7 @@ export const SpotForm = () => {
                         <input type='text' placeholder="Price per night (USD)" value={price} onChange={(e) => setPrice(e.target.value)}/>
                     </label>
                 </div>
-                {errors.price && <span className="error">{errors.price}</span>}
+                {errorValidation.price && <span className="error">{errorValidation.price}</span>}
                 <div>
                     <hr class="thick-line"/>
                 </div>
@@ -220,24 +243,24 @@ export const SpotForm = () => {
                     <label className="spot-review-image-input">
                         <input type='text' placeholder="Preview Image URL" value={previewImg} onChange={(e) => setPreviewImg(e.target.value)}/>
                     </label>
-                    {errors.previewImg && <span className="error">{errors.previewImg}</span>}
-                    {errors.previewImgInvalid && <span className="error">{errors.previewImgInvalid}</span>}
+                    {errorValidation.previewImg && <span className="error">{errorValidation.previewImg}</span>}
+                    {errorValidation.previewImgInvalid && <span className="error">{errorValidation.previewImgInvalid}</span>}
                     <label className="spot-image1-input">
                         <input type='text' placeholder="Image URL" value={imgOne} onChange={(e) => setImgOne(e.target.value)}/>
                     </label>
-                    {errors.imgOneInvalid && <span className="error">{errors.imgOneInvalid}</span>}
+                    {errorValidation.imgOneInvalid && <span className="error">{errorValidation.imgOneInvalid}</span>}
                     <label className="spot-image2-input">
                         <input type='text' placeholder="Image URL" value={imgTwo} onChange={(e) => setImgTwo(e.target.value)}/>
                     </label>
-                    {errors.imgTwoInvalid && <span className="error">{errors.imgTwoInvalid}</span>}
+                    {errorValidation.imgTwoInvalid && <span className="error">{errorValidation.imgTwoInvalid}</span>}
                     <label className="spot-image3-input">
                         <input type='text' placeholder="Image URL" value={imgThree} onChange={(e) => setImgThree(e.target.value)}/>
                     </label>
-                    {errors.imgThreeInvalid && <span className="error">{errors.imgThreeInvalid}</span>}
+                    {errorValidation.imgThreeInvalid && <span className="error">{errorValidation.imgThreeInvalid}</span>}
                     <label className="spot-image4-input">
                         <input type='text' placeholder="Image URL" value={imgFour} onChange={(e) => setImgFour(e.target.value)}/>
                     </label>
-                    {errors.imgFourInvalid && <span className="error">{errors.imgFourInvalid}</span>}
+                    {errorValidation.imgFourInvalid && <span className="error">{errorValidation.imgFourInvalid}</span>}
                 </div>
                 <div>
                     <hr class="thick-line"/>
