@@ -1,6 +1,7 @@
 #spot-main-container {
-    background-color: rgb(179, 179, 179);
+    background-color: rgb(148, 148, 148);
     padding: 5px;
+    border-radius: 10px;
 }
 
 .spot-link {
@@ -11,16 +12,16 @@
 #spots-details-container {
   display: flex;
   justify-content: space-between;
-  background-color: ;
 }
 
 #spot-details-container:hover {
     cursor: pointer;
 }
 
-.spot-preview-img {
+#spot-preview-img > img{
+    aspect-ratio: 1/1;
     width: 100%;
-    height: 200px;
+    border-radius: 10px;
 }
 
 a {

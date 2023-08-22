@@ -7,7 +7,9 @@ export const SpotIndexItem = ({spot}) => {
     return (
         <div id='spot-main-container'>
             <Link to ={`/spots/${spot.id}`} className='spot-link' title={spot.name}>
-                <img className='spot-preview-img' src={spot.previewImage} alt={spot.address}/>
+                <div id='spot-preview-img'>
+                    <img src={spot.previewImage} alt={spot.address}/>
+                </div>
                 <div id='spots-details-container'>
                     <div id='spot-city-state'>
                         <p>{`${spot.city}, ${spot.state}`}</p>
