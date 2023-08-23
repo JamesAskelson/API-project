@@ -56,7 +56,10 @@ function ProfileButton({ user }) {
             <li>{user.email}</li>
             <hr/>
             <li>
-              <NavLink exact to='/spots/current'>Manage Spots</NavLink>
+              <div id='manage-spots-reviews-container'>
+                <NavLink exact to='/spots/current'>Manage Spots</NavLink>
+                <NavLink exact to='/reviews/current'>Manage Reviews</NavLink>
+              </div>
             </li>
             <hr/>
             <li className="dropdown-logout-button">

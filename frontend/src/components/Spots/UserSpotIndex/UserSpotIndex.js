@@ -12,6 +12,7 @@ import { NavLink } from "react-router-dom";
 
 
 
+
 export const UserSpotIndex = () => {
     const dispatch = useDispatch()
     const history = useHistory();

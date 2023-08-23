@@ -3,6 +3,7 @@ import { csrfFetch } from './csrf';
 const GET_REVIEWS = 'reviews/getReviews';
 const GET_REVIEWS_BY_USER = 'reviews/getReviewsByUser'
 const RECEIVE_REVIEW = 'reviews/reviewReview';
+const EDIT_REVIEW = 'reviews/editReview';
 const REMOVE_REVIEW = 'reviews/removeReview'
 
 
@@ -18,6 +19,11 @@ const getReviewsByUser = (reviews) => ({
 
 const receiveReview = (review) => ({
     type: RECEIVE_REVIEW,
+    review
+})
+
+const editReview = (review) => ({
+    type: EDIT_REVIEW,
     review
 })
 
@@ -68,6 +74,30 @@ export const createReview = (review, spotId) => async (dispatch, getState) => {
     }
 }
 
+export const updateReview = (review, reviewId) => async (dispatch, getState) => {
+    try {
+        const res = await csrfFetch(`/api/reviews/${reviewId}`, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(review)
+        })
+        if(res.ok) {
+            const edittedReview = await res.json()
+            const currentState = getState()
+            const userData = currentState.session
+            // console.log(userData)
+
+            edittedReview.User = userData.user
+            dispatch(receiveReview(edittedReview))
+        } else {
+            const errors = await res.json()
+            return errors;
+        }
+    } catch (err) {
+        return await err.json()
+    }
+}
+
 export const deleteReview = (review) => async (dispatch) => {
     const res = await csrfFetch(`/api/reviews/${review.id}`, {
         method: 'DELETE',
@@ -97,6 +127,8 @@ const reviewsReducer = (state = initialState, action) => {
             })
             return {...state, userReviews: userReviewsState};
         case RECEIVE_REVIEW:
+            return {...state, spotReviews: {...state.spotReviews, [action.review.id]: action.review}}
+        case EDIT_REVIEW:
             return {...state, spotReviews: {...state.spotReviews, [action.review.id]: action.review}}
         case REMOVE_REVIEW:
             const removeReviewState = {...state, userReviews:{...state.userReviews}, spotReviews: {...state.spotReviews}}

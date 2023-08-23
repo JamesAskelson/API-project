@@ -122,7 +122,7 @@
 
 .review {
     font-size: 16px;
-    padding-bottom: 40px;
+    padding-bottom: 10px;
     word-wrap: break-word;
 }
 
@@ -132,4 +132,10 @@
     border: 1px solid black;
     box-shadow: 2px 2px 0px black;
     margin-bottom: 10px;
+}
+
+#review-buttons{
+    display: flex;
+    gap: 10px;
+    padding-bottom: 20px;
 }

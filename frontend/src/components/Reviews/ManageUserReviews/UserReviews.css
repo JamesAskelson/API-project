@@ -1,0 +1,38 @@
+#manage-reviews-main-container{
+    padding: 0 10%;
+}
+
+#manage-reviews-title{
+    display: flex;
+}
+
+.individual-user-review{
+    padding: 5px;
+    width: 50%;
+}
+
+.individual-user-review:hover{
+    background-color: rgb(146, 146, 146);
+    border-radius: 10px;
+}
+
+.user-review-name>h3{
+    margin: 10px 0;
+}
+
+
+.user-review-date{
+    font-size: 18px;
+    padding-bottom: 10px;
+    color: rgb(85, 85, 85);
+}
+
+.user-review{
+    font-size: 18px;
+    padding-bottom: 10px;
+}
+
+#user-review-buttons{
+    display: flex;
+    gap: 10px;
+}

@@ -48,3 +48,8 @@
   .dropdown-logout-button button:hover {
     cursor: pointer;
   }
+
+  #manage-spots-reviews-container{
+    display: flex;
+    flex-direction: column;
+  }

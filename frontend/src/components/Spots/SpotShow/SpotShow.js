@@ -7,6 +7,7 @@ import { getReviewById } from '../../../store/reviews'
 import OpenModalButton from '../../OpenModalButton'
 import { PostReviewModal } from '../../PostReviewModal/PostReview'
 import { DeleteReviewModal } from '../../DeleteReviewModal/DeleteReview'
+import { EditReviewModal } from '../../EditReviewButton/EditReview'
 
 
 export const SpotShow = () => {
@@ -173,13 +174,24 @@ export const SpotShow = () => {
                         <div className='review'>
                             {review?.review}
                         </div>
-                        <div>
-                            {user !== null && user.id === review.userId && (
-                                <OpenModalButton
-                                buttonText="Delete your Review"
-                                modalComponent={<DeleteReviewModal review={review} spotId={review.spotId} />}
-                              />
-                            )}
+                        <div id='review-buttons'>
+                            <div className='open-modal-button'>
+                                {user !== null && user.id === review.userId && (
+                                    <OpenModalButton
+                                    buttonText="Edit"
+                                    modalComponent={<EditReviewModal review={review} reviewId={review.id} />}
+                                    />
+                                )}
+                            </div>
+                            <div className='open-modal-button'>
+                                {user !== null && user.id === review.userId && (
+                                    <OpenModalButton
+                                    buttonText="Delete"
+                                    modalComponent={<DeleteReviewModal review={review} spotId={review.spotId} />}
+                                    />
+                                )}
+                            </div>
+
                         </div>
                         </div>
                     );
