@@ -59,6 +59,7 @@ function ProfileButton({ user }) {
               <div id='manage-spots-reviews-container'>
                 <NavLink exact to='/spots/current'>Manage Spots</NavLink>
                 <NavLink exact to='/reviews/current'>Manage Reviews</NavLink>
+                <NavLink exact to='/bookings/current'>Manage Bookings</NavLink>
               </div>
             </li>
             <hr/>

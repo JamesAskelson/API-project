@@ -60,10 +60,19 @@ const validateReview = [
 router.post('/:id/bookings', restoreUser, requireAuth, async(req, res) => {
   let { startDate, endDate } = req.body;
 
+  let currentDate = new Date();
+  currentDate = currentDate.getTime()
   startDate = new Date(startDate)
   endDate = new Date(endDate)
   startDate = startDate.getTime()
   endDate = endDate.getTime()
+
+  if (startDate < currentDate || endDate < currentDate) {
+    res.status(400);
+    return res.json({
+      "message": "Start date and end date must be in the future"
+    });
+  }
 
   // console.log(startDate, endDate)
 
@@ -100,15 +109,9 @@ router.post('/:id/bookings', restoreUser, requireAuth, async(req, res) => {
 
       errors = []
       if(startDate >= bookingStart && startDate <= bookingEnd) {
-        // console.log("startDate", startDate)
-        // console.log("bookingStart", bookingStart)
-        // console.log("bookingStart", bookingEnd)
         errors.push(1)
       }
       if(endDate >= bookingStart && endDate <= bookingEnd){
-        // console.log("endDate", endDate)
-        // console.log("bookingStart", bookingStart)
-        // console.log("bookingStart", bookingEnd)
         errors.push(1)
       }
     })

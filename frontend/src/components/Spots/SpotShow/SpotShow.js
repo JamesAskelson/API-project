@@ -8,6 +8,7 @@ import OpenModalButton from '../../OpenModalButton'
 import { PostReviewModal } from '../../PostReviewModal/PostReview'
 import { DeleteReviewModal } from '../../DeleteReviewModal/DeleteReview'
 import { EditReviewModal } from '../../EditReviewButton/EditReview'
+import { getAllSpotBookings } from '../../../store/bookings'
 
 
 export const SpotShow = () => {
@@ -18,14 +19,13 @@ export const SpotShow = () => {
     const reviews = useSelector(state => Object.values(state?.reviews?.spotReviews))
     const previewSpotImages = spot?.SpotImages?.filter(img => img.preview === true)
     const otherSpotImages = spot?.SpotImages?.filter(img => img.preview === false)
-    // const [hasReviewed, setHasReviewed] = useState(false);
-    // console.log('user', user)
-    // console.log('spot', spot)
-    // console.log('reviews', reviews)
+    const spotBookings = useSelector(state => Object.values(state.bookings.spotBookings))
+    console.log('spotBookings', spotBookings)
 
     useEffect(() => {
         dispatch(getSpotById(spotId))
         dispatch(getReviewById(spotId))
+        dispatch(getAllSpotBookings(spotId))
     }, [dispatch, spotId])
 
 
@@ -37,15 +37,6 @@ export const SpotShow = () => {
         }
         return false;
     }
-
-    // useEffect(() => {
-    // }, [reviews])
-
-
-    // console.log('userReview', userReview)
-    // setHasReviewed(userReview);
-
-
 
     const handleClick = () => {
         alert('Feature Coming Soon...');

@@ -16,7 +16,6 @@ export const SpotIndexItem = ({spot}) => {
                         <span className='spot-price'>${spot.price}</span>  night
                     </div>
                     <div id='spot-rating'>
-                        {console.log(spot)}
                         <p>★{spot.avgRating ? spot.avgRating : 'New'}</p>
                     </div>
                 </div>

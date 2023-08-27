@@ -70,7 +70,6 @@ export const SpotForm = () => {
         //     // if(urlCheck(imgThree)) await dispatch(addImageToSpot(res, false, imgThree))
         //     // if(urlCheck(imgFour)) await dispatch(addImageToSpot(res, false, imgFour))
         //     }
-        console.log('errors', errors)
         if(!Object.values(errors).length) {
             const spot = {
                 address,
@@ -84,7 +83,7 @@ export const SpotForm = () => {
                 price,
                 previewImg
             }
-            
+
             const res = await dispatch(createSpot(spot))
             await dispatch(addImageToSpot(res, true, previewImg))
             if(imgOne) await dispatch(addImageToSpot(res, false, imgOne))

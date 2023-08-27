@@ -31,7 +31,6 @@ export const UserReviewsIndex = () => {
                     // console.log('firstName', review?.User?.firstName);
                     // console.log('lastName', review?.User?.lastName);
                     // console.log(review.userId)
-                    console.log('review', review)
                     return (
                         <div className='individual-user-review'>
                             <div className='user-review-name'>

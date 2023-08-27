@@ -13,7 +13,6 @@ export function EditReviewModal({ review, reviewId }) {
     const [color, setColor] = useState(0);
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
-    console.log('review', review)
 
     useEffect(() => {
         const errors = {}

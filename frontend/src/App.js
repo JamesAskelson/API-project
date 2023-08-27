@@ -9,6 +9,7 @@ import { SpotForm } from "./components/Spots/SpotForm/SpotForm";
 import { UserSpotIndex } from "./components/Spots/UserSpotIndex/UserSpotIndex";
 import { EditSpotForm } from "./components/Spots/EditSpotForm/EditSpotForm";
 import { UserReviewsIndex } from "./components/Reviews/ManageUserReviews";
+import { UserBookingsIndex } from "./components/Bookings/ManageUserBookings";
 
 
 function App() {
@@ -33,6 +34,9 @@ function App() {
         </Route>
         <Route path='/spots/current'>
           <UserSpotIndex spots={spots}/>
+        </Route>
+        <Route path='/bookings/current'>
+          <UserBookingsIndex />
         </Route>
         <Route path='/reviews/current'>
           <UserReviewsIndex />

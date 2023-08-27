@@ -1,0 +1,38 @@
+
+
+#manage-bookings-container{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+#individual-booking-container{
+    display: flex;
+    gap: 10px;
+}
+
+#individual-booking-img>img{
+    max-width: 200px;
+    max-height: 200px;
+}
+
+#individual-booking-line{
+    border: 1px solid black;
+}
+
+#individual-booking-info-container{
+    display :flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+}
+
+#individual-booking-name{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#individual-booking-date{
+    font-size: 20px;
+    font-weight: bold;
+}
