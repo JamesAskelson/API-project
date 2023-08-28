@@ -74,6 +74,13 @@ router.post('/:id/bookings', restoreUser, requireAuth, async(req, res) => {
     });
   }
 
+  // if (endDate >= startDate) {
+  //   res.status(400);
+  //   return res.json({
+  //     "message": "End date must be before start date"
+  //   });
+  // }
+
   // console.log(startDate, endDate)
 
   let spot = await Spot.findByPk(req.params.id);
@@ -88,13 +95,14 @@ router.post('/:id/bookings', restoreUser, requireAuth, async(req, res) => {
   if(spot.ownerId === req.user.id) {
     res.status(403)
     return res.json({
-      "message": "Forbidden"
+      "message": "Spot owners cannot book at their own spots"
     })
   }
 
   let spotBookings = await spot.getBookings()
 
-  let errors = []
+  let endErrors = []
+  let startErrors = []
 
   await Promise.all(
     spotBookings.map( async booking => {
@@ -107,22 +115,33 @@ router.post('/:id/bookings', restoreUser, requireAuth, async(req, res) => {
       bookingStart = bookingStart.getTime()
       bookingEnd = bookingEnd.getTime()
 
-      errors = []
+
       if(startDate >= bookingStart && startDate <= bookingEnd) {
-        errors.push(1)
+        startErrors.push(1)
       }
       if(endDate >= bookingStart && endDate <= bookingEnd){
-        errors.push(1)
+        endErrors.push(1)
       }
     })
   )
 
-  if(errors.length > 0) {
+  if(startErrors.length > 0) {
     res.status(403);
     return res.json({
-      "message": "Sorry, this spot is already booked for the specified dates",
+      // "message": "Sorry, this spot is already booked for the specified dates",
       "errors": {
         "startDate": "Start date conflicts with an existing booking",
+        // "endDate": "End date conflicts with an existing booking"
+      }
+    });
+  }
+
+  if(endErrors.length > 0) {
+    res.status(403);
+    return res.json({
+      // "message": "Sorry, this spot is already booked for the specified dates",
+      "errors": {
+        // "startDate": "Start date conflicts with an existing booking",
         "endDate": "End date conflicts with an existing booking"
       }
     });

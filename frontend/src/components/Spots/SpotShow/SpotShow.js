@@ -8,7 +8,7 @@ import OpenModalButton from '../../OpenModalButton'
 import { PostReviewModal } from '../../PostReviewModal/PostReview'
 import { DeleteReviewModal } from '../../DeleteReviewModal/DeleteReview'
 import { EditReviewModal } from '../../EditReviewButton/EditReview'
-import { getAllSpotBookings } from '../../../store/bookings'
+import { PostBookingModal } from '../../Bookings/PostBookingModal'
 
 
 export const SpotShow = () => {
@@ -19,13 +19,10 @@ export const SpotShow = () => {
     const reviews = useSelector(state => Object.values(state?.reviews?.spotReviews))
     const previewSpotImages = spot?.SpotImages?.filter(img => img.preview === true)
     const otherSpotImages = spot?.SpotImages?.filter(img => img.preview === false)
-    const spotBookings = useSelector(state => Object.values(state.bookings.spotBookings))
-    console.log('spotBookings', spotBookings)
 
     useEffect(() => {
         dispatch(getSpotById(spotId))
         dispatch(getReviewById(spotId))
-        dispatch(getAllSpotBookings(spotId))
     }, [dispatch, spotId])
 
 
@@ -127,9 +124,14 @@ export const SpotShow = () => {
                         </div>
                     </div>
                     <div className='reserve-button'>
-                        <button onClick={handleClick}>
-                            Reserve
-                        </button>
+                        {user ? (
+                            <OpenModalButton
+                            buttonText="Reserve"
+                            modalComponent={<PostBookingModal spotId={spotId}/>}
+                            />
+                        ) : (
+                            <button disabled>Reserve</button>
+                          )}
                     </div>
                 </div>
             </div>
