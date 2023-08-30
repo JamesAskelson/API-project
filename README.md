@@ -1,3 +1,57 @@
+# Spots Around the World
+
+A online marketplace clone of airBnB where users can look at spots from across the globe, make reservations to any spots of their choosing, and create reviews to any spots they've been to.
+
+
+## Live Link
+
+https://airbnb-api-clone.onrender.com/
+## Tech Stack
+
+**Frontend:** HTML5, CSS3, React, Redux
+
+**Backend:** Express, Sequelize, SQLite
+
+
+## Features
+
+### Spots
+- Users can create a Spot
+- Users can read/view other Spot
+- Users can update their Spot
+- Users can delete their Spot
+
+### Reviews
+- Users can create Reviews on Spots
+- users can read/view all of the Reviews on a Spot
+- Users can delete their Review(s) on a Spot
+### Bookings
+Logged-in Users can
+
+- Create a booking at a spot
+- Update their booking at a spot
+- Read all of their bookings
+- Delete/Cancel their booking
+
+
+## Preview Images
+
+### Spots Landing Page
+
+![](https://i.imgur.com/dovtTyG.png)
+
+### Spots Details Page
+
+![](https://i.imgur.com/86GL12O.png)
+## Roadmap
+
+- Adding Google maps functionality
+
+## Endpoints
+
+|||||
+
+
 # `AirBnB-clone-express-sequelize-capstone-project`
 
 ## Database Schema Design
