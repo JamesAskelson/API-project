@@ -49,8 +49,28 @@ Logged-in Users can
 
 ## Endpoints
 
-|||||
-
+|Request|Purpose|Result|
+| ---- | ------------- | ---- |
+| GET /api/session | Gets the current user info if logged in | |
+| POST /api/session | Logs in a current user with valid credentials and returns the current user's information. |  |
+| POST /api/user | Creates a new user, logs them in as the current user, and returns the current user's information. |  |
+| GET /api/spots | Returns all the spots. |  |
+| GET /api/spots/current | Return all the current user's spots |  |
+| GET /api/spots/:id | Returns details of spot by its id |  |
+| POST /api/spots/:id | Create a returns a new spot |  |
+| POST /api/spots/:id/images | Create and return a new image for a specific spot |  |
+| PUT /api/spots/:id | Update and return an existing spot |  |
+| DELETE /api/spots/:id | Deletes an existing spot |  |
+| GET /api/reviews/current | Return all the current user's reviews |  |
+| GET /api/spots/:id/reviews | Return all the reviews of a spot |  |
+| POST /api/spots/:id/reviews | Create and return a new review for a spot |  |
+| PUT /api/reviews/:id | Update and return an existing review |  |
+| DELETE /api/reviews/:id | Deletes an existing review |  |
+| GET /api/bookings/current | Return all bookings by the current user |  |
+| GET /api/spots/:id/bookings | Return all the bookings by a spot |  |
+| POST /api/spots/:id/bookings | Create and return a booking for a spot |  |
+| PUT /api/bookings/:id | Update and return an existing booking |  |
+| DELETE /api/booking/:id | Delete an existing booking |  |
 
 # `AirBnB-clone-express-sequelize-capstone-project`
 
